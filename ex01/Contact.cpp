@@ -29,7 +29,7 @@ void Contact::setDarkest(const std::string& secret)
 	_darkestSecret = secret;
 }
 
-void Contact::setPhone(const int &phone)
+void Contact::setPhone(const std::string &phone)
 {
 	std::cout << "Set Phone number" << std::endl;
 	_phone = phone;
@@ -37,6 +37,7 @@ void Contact::setPhone(const int &phone)
 
 std::string Contact::getFName() const
 {
+	std::cout << "First name: ";
 	return _firstName;
 }
 
@@ -56,13 +57,13 @@ std:: string Contact::getDarkest() const
 	return _darkestSecret;
 }
 
-int	Contact::getPhone() const
+std::string	Contact::getPhone() const
 {
 	return _phone;
 }
 
 Contact::~Contact()
 {
-	std::cout << "Destructor called." << std::endl;
+	std::cout << "Destructor Contact called." << std::endl;
 	
 }

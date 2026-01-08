@@ -1,16 +1,21 @@
 #include "PhoneBook.hpp"
+// c++ -Wall -Wextra -Werror -std=c++98 main.cpp PhoneBook.cpp Contact.cpp
 
 int	main()
 {
 	std:: string command;
-	std::cout << "Enter some command, please: " << std::endl;
+	PhoneBook PhoneBook;
+	std::cout << "Enter a command, please: " << std::endl;
 	while (std::getline(std::cin,command))
 	{
 		if (command == "EXIT")
 			break;
-		else 
+		if (command == "ADD")
+			PhoneBook.Add();
+		if (command == "PRINT")
+			PhoneBook.printContacts();
+		else
 			std::cout << "You've entered some input:  " <<  command << std::endl;
-		std::cout << "Enter some command, please: " << std::endl;
+		std::cout << "Enter a command, please: " << std::endl;
 	}
-
 }
