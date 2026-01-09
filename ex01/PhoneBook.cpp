@@ -66,11 +66,10 @@ void	PhoneBook::Search()
 	int 		i = 0;
 	std::string	s;
 
-	std::cout << "\t" << "|   Index  |First Name| Last Name| Nickname |" << std::endl;
+	std::cout << CIAN << "\t" << "|   Index  |First Name| Last Name| Nickname |" << RST << std::endl;
 	while (i < 8 && !contacts[i].getFname().empty())
 	{
-		// if (i == 8)
-		// 	break;
+
 		std::cout << "\t";
 		std::cout << std::right << "|     " << i << "    |";
 		if (contacts[i].getFname().size() > 10)
@@ -128,4 +127,25 @@ void PhoneBook::printContacts()
 	{
 		std::cout << "First name: " << contacts[i].getFname() << std::endl;
 	}
+}
+
+void PhoneBook::testADD()
+{
+	std::string Farr[] = {"La Jessy", "Luca", "MANOLO", "Giuseppe", "VErgoglio", "Amparinos", "Maria del Carmen", "Andreita"};
+	std::string Larr[] = {"Chungaa", "Manolo", "Estanco", "De las flores", "   Fetucini", "Cuesta mogollon", "Latios", "Matamoros"};
+	std::string Narr[] = {"Bakalaera", "El Pepe", "Facha", "Fuckero", "La salsa", "Mamadica", "TDS pts", "El diablo",};
+	std::string Parr[] = {"123123123","123123123","123123123","123123123","123123123","123123123","123123123","123123123"};
+	std::string Darr[] = {"Se droga", "Es gay", "Mas gay aun", "Un puto", "la chupa", "Le mola la farlopa", "Es swinger", "To racista"};
+
+	std::cout << YLL << "Loading contacts to list" << RST << std::endl;
+	for (int i = 0; i < 8; i++)
+	{
+
+		contacts[i].setFname(Farr[i]);
+		contacts[i].setLname(Larr[i]);
+		contacts[i].setNickname(Narr[i]);
+		contacts[i].setPhone(Parr[i]);
+		contacts[i].setDarkest(Darr[i]);
+	}
+	std::cout << GRN << "Loading successful." << RST << std::endl;
 }

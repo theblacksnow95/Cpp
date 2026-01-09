@@ -16,6 +16,8 @@ int	main()
 			PhoneBook.printContacts();
 		if (command == "SEARCH")
 			PhoneBook.Search();
+		if (command == "TEST")
+			PhoneBook.testADD();
 		// else
 		// 	std::cout << "You've entered some input:  " <<  command << std::endl;
 		std::cout << "Enter a command, please: " << std::endl;

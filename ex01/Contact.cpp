@@ -17,31 +17,31 @@ bool Contact::validField(const std::string& string)
 
 void Contact::setFname(const std::string& fname)
 {
-	std::cout << "Set first name." << std::endl;
+	// std::cout << "Set first name." << std::endl;
 	_firstName = fname;
 }
 
 void Contact::setLname(const std::string& lname)
 {
-	std::cout << "Set last name." << std::endl;
+	// std::cout << "Set last name." << std::endl;
 	_lastName = lname;
 }
 
 void Contact::setNickname(const std::string& nick)
 {
-	std::cout << "Set Nickname." << std::endl;
+	// std::cout << "Set Nickname." << std::endl;
 	_nickName = nick;
 }
 
 void Contact::setDarkest(const std::string& secret)
 {
-	std::cout << "Set secret." << std::endl;
+	// std::cout << "Set secret." << std::endl;
 	_darkestSecret = secret;
 }
 
 void Contact::setPhone(const std::string &phone)
 {
-	std::cout << "Set Phone number" << std::endl;
+	// std::cout << "Set Phone number" << std::endl;
 	_phone = phone;
 }
 
