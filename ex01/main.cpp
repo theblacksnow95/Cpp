@@ -1,5 +1,5 @@
 #include "PhoneBook.hpp"
-// c++ -Wall -Wextra -Werror -std=c++98 main.cpp PhoneBook.cpp Contact.cpp
+// c++ -Wall -Wextra -Werror -std=c++98 main.cpp PhoneBook.cpp Contact.cpp -o phoneTest
 
 int	main()
 {
@@ -14,8 +14,10 @@ int	main()
 			PhoneBook.Add();
 		if (command == "PRINT")
 			PhoneBook.printContacts();
-		else
-			std::cout << "You've entered some input:  " <<  command << std::endl;
+		if (command == "SEARCH")
+			PhoneBook.Search();
+		// else
+		// 	std::cout << "You've entered some input:  " <<  command << std::endl;
 		std::cout << "Enter a command, please: " << std::endl;
 	}
 }

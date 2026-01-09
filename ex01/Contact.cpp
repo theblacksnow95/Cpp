@@ -1,8 +1,18 @@
 #include "Contact.hpp"
+#include "PhoneBook.hpp"
 
 Contact::Contact()
 {
-	std::cout << "Default constructor called." << std::endl;
+	std::cout << CIAN << "Default Contact constructor called." <<  RST << std::endl;
+}
+
+bool Contact::validField(const std::string& string)
+{
+	if (string.empty())
+		return (false);
+	if (string.find_first_not_of(" \t\n\v\f\r") == std::string::npos)
+		return (false);
+	return (true);
 }
 
 void Contact::setFname(const std::string& fname)
@@ -13,7 +23,7 @@ void Contact::setFname(const std::string& fname)
 
 void Contact::setLname(const std::string& lname)
 {
-	std::cout << "Set first name." << std::endl;
+	std::cout << "Set last name." << std::endl;
 	_lastName = lname;
 }
 
@@ -25,7 +35,7 @@ void Contact::setNickname(const std::string& nick)
 
 void Contact::setDarkest(const std::string& secret)
 {
-	std::cout << "Set secret." << std::endl; 
+	std::cout << "Set secret." << std::endl;
 	_darkestSecret = secret;
 }
 
@@ -35,13 +45,13 @@ void Contact::setPhone(const std::string &phone)
 	_phone = phone;
 }
 
-std::string Contact::getFName() const
+std::string Contact::getFname() const
 {
-	std::cout << "First name: ";
+	// std::cout << "First name: ";
 	return _firstName;
 }
 
-std::string Contact::getLName() const
+std::string Contact::getLname() const
 {
 	return _lastName;
 }
@@ -64,6 +74,6 @@ std::string	Contact::getPhone() const
 
 Contact::~Contact()
 {
-	std::cout << "Destructor Contact called." << std::endl;
-	
+	std::cout << RED << "Destructor Contact called." << RST << std::endl;
+
 }
