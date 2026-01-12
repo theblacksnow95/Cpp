@@ -132,8 +132,8 @@ void PhoneBook::Add()
 		contacts[i].setDarkest(res);
 	}
 	while (!contacts->validField(input) || !contacts->validChars(input));
-	std::cout << "contact --> [" << YLL << contacts[i].getFname() << RST << \
-	"] added to contacts array." << std::endl;
+	std::cout << "contact --> [ " << YLL << contacts[i].getFname() << RST << \
+	" ] added to contacts array." << std::endl;
 	std::cout << "Index position: [" << (idx + 1) % 9 << "]" << std::endl;
 	idx++;
 }
@@ -143,60 +143,48 @@ void	PhoneBook::Search()
 	int 		i = 0;
 	std::string	s;
 
-	std::cout << CIAN << "\t" << "|   Index  |First Name| Last Name| Nickname |" << RST << std::endl;
+	std::cout << CIAN << "\t" << "|     Index|First Name| Last Name|  Nickname|" << RST << std::endl;
 	while (i < 8 && !contacts[i].getFname().empty())
 	{
 
 		std::cout << "\t";
-		std::cout << std::right << CIAN << "|     " << RED << i + 1 << CIAN << "    |" << RST;
+		std::cout << CIAN << "|" << RED << std::setw(10) << i + 1 << CIAN << "|" << RST;
 		if (contacts[i].getFname().size() > 10)
 		{
-			s = contacts[i].getFname();
-			std::cout << YLL << std::right << s.substr(0, 9) << '.' << RST;
+			s = contacts[i].getFname().substr(0, 9) + '.';
+			std::cout << YLL << std::setw(10) << s << RST;
 			std::cout << CIAN << "|" << RST;
 
 		}
 		else
 		{
 			s = contacts[i].getFname();
-			int len = s.size();
-			len = 10 - len;
-			if (len < 0)
-				len = 0;
-			std::cout << YLL << std::right <<  s << std::string(len, ' ') << RST;
+			std::cout << YLL << std::setw(10) << s << RST;
 			std::cout << CIAN << "|" << RST;
 
 		}
 		if (contacts[i].getLname().size() > 10)
 		{
-			s = contacts[i].getLname();
-			std::cout << YLL << std::right << s.substr(0, 9) << '.' << RST;
+			s = contacts[i].getLname().substr(0, 9) + ".";
+			std::cout << YLL << std::setw(10) << s << RST;
 			std::cout << CIAN << "|" << RST;
 		}
 		else
 		{
 			s = contacts[i].getLname();
-			int	len = s.size();
-			len = 10 - len;
-			if (len < 0)
-				len = 0;
-			std::cout << YLL << std::right << s << std::string(len, ' ') << RST;
+			std::cout << YLL << std::setw(10) << s << RST;
 			std::cout << CIAN << "|" << RST;
 		}
 		if (contacts[i].getNickname().size() > 10)
 		{
-			s = contacts[i].getNickname();
-			std::cout << YLL << std::right << s.substr(0, 9) << RST << '.';
+			s = contacts[i].getNickname().substr(0, 9) + ".";
+			std::cout << YLL << std::setw(10) << s << RST;
 			std::cout << CIAN << '|' << RST;
 		}
 		else
 		{
 			s = contacts[i].getNickname();
-			int len = s.size();
-			len = 10 - len;
-			if (len < 0)
-				len = 0;
-			std::cout << YLL << std::right << s << std::string(len, ' ') << RST;
+			std::cout << YLL << std::setw(10) << s << RST;
 			std::cout << CIAN << "|" << RST;
 
 		}
