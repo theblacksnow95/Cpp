@@ -18,7 +18,6 @@ class PhoneBook
 	private:
 		Contact	contacts[8];
 		int		idx;
-		bool	ok;
 	public:
 		PhoneBook();
 		void Add();

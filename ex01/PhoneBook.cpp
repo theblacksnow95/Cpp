@@ -1,7 +1,7 @@
 #include "PhoneBook.hpp"
 #include <sstream>
 
-PhoneBook::PhoneBook(): idx(0), ok(false)
+PhoneBook::PhoneBook(): idx(0)
 {
 	std::cout << GRN <<"Default PHONEBOOK constructor called."<< RST << std::endl << std::endl;
 }
