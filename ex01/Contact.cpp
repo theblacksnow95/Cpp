@@ -12,18 +12,13 @@ bool Contact::validField(const std::string& string)
 		return (false);
 	if (string.find_first_not_of(" \t\n\v\f\r") == std::string::npos)
 		return (false);
-	for (size_t i = 0; i < string.size() - 1; i++)
-	{
-		if (isspace(string[i]))
-			i++;
-		if (!(isalnum(string[i]) || isspace(string[i])))
-			return (false);
-	}
 	return (true);
 }
 
 bool Contact::validChars(const std::string &string)
 {
+	if (string.empty())
+		return (false);
 	for (size_t i = 0;i < string.size(); i++)
 	{
 		if (isspace(string[i]))

@@ -24,6 +24,7 @@ class PhoneBook
 		void Add();
 		void Search();
 		~PhoneBook();
+		void selectContact();
 		void printContacts();
 		void testADD();
 

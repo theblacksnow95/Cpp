@@ -1,4 +1,5 @@
 #include "PhoneBook.hpp"
+#include <sstream>
 
 PhoneBook::PhoneBook(): idx(0), ok(false)
 {
@@ -65,8 +66,11 @@ void PhoneBook::Add()
 
 			if (!getline(std::cin, input))
 			{
-				std::cout << "Exitinf from EOF." << std::endl;
+				std::cout << "Exiting from EOF." << std::endl;
+				return;
 			}
+			if (input.empty())
+				continue;
 			std::string res(cleanInput(input));
 			contacts[i].setFname(res);
 	}
@@ -74,23 +78,42 @@ void PhoneBook::Add()
 	do
 	{
 		std::cout << "Last name: " << std::endl;
-		getline(std::cin, input);
+		if (!getline(std::cin, input))
+		{
+			std::cout << "Exiting from EOF." << std::endl;
+			return;
+		}
+		if (input.empty())
+			continue;
 		std::string res(cleanInput(input));
 		contacts[i].setLname(res);
 	}
-	while (!contacts->validField(input));
+	while (!contacts->validField(input) || !contacts->validChars(input));
 	do
 	{
 		std::cout << "Nickname: " << std::endl;
-		getline(std::cin, input);
+		if (!getline(std::cin, input))
+		{
+			std::cout << "Exiting from EOF." << std::endl;
+			return;
+		}
+		if (input.empty())
+			continue;
 		std::string res(cleanInput(input));
 		contacts[i].setNickname(res);
 	}
-	while (!contacts->validField(input));
+	while (!contacts->validField(input) || !contacts->validChars(input));
 	do
 	{
 		std::cout << "Phone number: " << std::endl;
-		getline(std::cin, input);
+
+		if (!getline(std::cin, input))
+		{
+				std::cout << "Exiting from EOF phone." << std::endl;
+				return;
+		}
+		if (input.empty())
+			continue;
 		contacts[i].setPhone(input);
 	}
 	while ((!contacts->validField(input) || input.find_first_not_of("+0987654321") != input.npos)
@@ -98,12 +121,19 @@ void PhoneBook::Add()
 	do
 	{
 		std::cout << "Darkest secret: " << std::endl;
-		getline(std::cin, input);
+		if (!getline(std::cin, input))
+		{
+			std::cout << "Exiting from EOF." << std::endl;
+			return;
+		}
+		if (input.empty())
+			continue;
 		std::string res(cleanInput(input));
 		contacts[i].setDarkest(res);
 	}
-	while (!contacts->validField(input));
-	std::cout << "contact --> [" << contacts[i].getFname() << "] added to contacts array." << std::endl;
+	while (!contacts->validField(input) || !contacts->validChars(input));
+	std::cout << "contact --> [" << YLL << contacts[i].getFname() << RST << \
+	"] added to contacts array." << std::endl;
 	std::cout << "Index position: [" << (idx + 1) % 9 << "]" << std::endl;
 	idx++;
 }
@@ -118,11 +148,13 @@ void	PhoneBook::Search()
 	{
 
 		std::cout << "\t";
-		std::cout << std::right << "|     " << i << "    |";
+		std::cout << std::right << CIAN << "|     " << RED << i + 1 << CIAN << "    |" << RST;
 		if (contacts[i].getFname().size() > 10)
 		{
 			s = contacts[i].getFname();
-		std::cout << std::right << s.substr(0, 9) << '.'<< "|";
+			std::cout << YLL << std::right << s.substr(0, 9) << '.' << RST;
+			std::cout << CIAN << "|" << RST;
+
 		}
 		else
 		{
@@ -131,12 +163,15 @@ void	PhoneBook::Search()
 			len = 10 - len;
 			if (len < 0)
 				len = 0;
-			std::cout << std::right <<  s << std::string(len, ' ') << "|";
+			std::cout << YLL << std::right <<  s << std::string(len, ' ') << RST;
+			std::cout << CIAN << "|" << RST;
+
 		}
 		if (contacts[i].getLname().size() > 10)
 		{
 			s = contacts[i].getLname();
-		std::cout << std::right << s.substr(0, 9) << '.' << "|";
+			std::cout << YLL << std::right << s.substr(0, 9) << '.' << RST;
+			std::cout << CIAN << "|" << RST;
 		}
 		else
 		{
@@ -145,12 +180,14 @@ void	PhoneBook::Search()
 			len = 10 - len;
 			if (len < 0)
 				len = 0;
-			std::cout << std::right << s << std::string(len, ' ') << "|";
+			std::cout << YLL << std::right << s << std::string(len, ' ') << RST;
+			std::cout << CIAN << "|" << RST;
 		}
 		if (contacts[i].getNickname().size() > 10)
 		{
 			s = contacts[i].getNickname();
-			std::cout << std::right << s.substr(0, 9) << '.' << "|";
+			std::cout << YLL << std::right << s.substr(0, 9) << RST << '.';
+			std::cout << CIAN << '|' << RST;
 		}
 		else
 		{
@@ -159,12 +196,49 @@ void	PhoneBook::Search()
 			len = 10 - len;
 			if (len < 0)
 				len = 0;
-			std::cout << std::right << s << std::string(len, ' ') << "|";
+			std::cout << YLL << std::right << s << std::string(len, ' ') << RST;
+			std::cout << CIAN << "|" << RST;
+
 		}
 		std::cout << std::endl;
 		i++;
 	}
 	std::cout << std::endl;
+	selectContact();
+}
+
+void PhoneBook::selectContact()
+{
+	std::string	input;
+	int			i;
+	std::cout << "Select a contact to display [1 - 8]: " << std::endl;
+	while (true)
+	{
+		if (!getline(std::cin,input) )
+		{
+			std::cout << "Exiting with EOF." << std::endl;
+			return ;
+		}
+		if (input.size() != 1 || input.find_first_not_of("12345678") != input.npos)
+		{
+			std::cout << RED << "Invalid index" << RST << std::endl;
+			return ;
+		}
+		i = input[0] - '0' - 1;
+		if (contacts[i].getFname().empty())
+		{
+			std::cout << RED << "Invalid index" << RST << std::endl;
+			return ;
+		}
+		std::cout << std::string(100, '-') << std:: endl;
+		std::cout << "\t" << "First name:\t" << contacts[i].getFname() << std::endl;
+		std::cout << "\t" << "Last name:\t" << contacts[i].getLname() << std::endl;
+		std::cout << "\t" << "Nickname:\t" << contacts[i].getNickname() << std::endl;
+		std::cout << "\t" << "Phone Number:\t" << contacts[i].getPhone() << std::endl;
+		std::cout << "\t" << "Darkest secret:\t" << contacts[i].getDarkest() << std::endl;
+		std::cout  << std::string(100, '-') << std:: endl;
+		return;
+	}
 }
 
 void PhoneBook::printContacts()
@@ -179,10 +253,10 @@ void PhoneBook::printContacts()
 void PhoneBook::testADD()
 {
 	std::string Farr[] = {"La Jessy", "Luca", "MANOLO", "Giuseppe", "VErgoglio", "Amparinos", "Maria del Carmen", "Andreita"};
-	std::string Larr[] = {"Chungaa", "Manolo", "Estanco", "De las flores", "   Fetucini", "Cuesta mogollon", "Latios", "Matamoros"};
-	std::string Narr[] = {"Bakalaera", "El Pepe", "Facha", "Fuckero", "La salsa", "Mamadica", "TDS pts", "El diablo",};
-	std::string Parr[] = {"123123123","123123123","123123123","123123123","123123123","123123123","123123123","123123123"};
-	std::string Darr[] = {"Se droga", "Es gay", "Mas gay aun", "Un puto", "la chupa", "Le mola la farlopa", "Es swinger", "To racista"};
+	std::string Larr[] = {"Chungaa", "Manolo", "Estanco", "De las flores", "Fetucini", "Cuesta mogollon", "Latios", "Matamoros"};
+	std::string Narr[] = {"Bakalaera", "El Pepe", "Facha", "Fuckero", "La salsa", "Mamadica", "TDS TDS", "El diablo",};
+	std::string Parr[] = {"123123123","567238731","876456231","098567432","123123123","234345321","098765678","098124326"};
+	std::string Darr[] = {"Se droga", "Smash", "Elliot puto", "NErd", "la chupa", "Le mola farlopa", "Es swinger", "Fachirulo"};
 
 	std::cout << YLL << "Loading contacts to list" << RST << std::endl;
 	for (int i = 0; i < 8; i++)
