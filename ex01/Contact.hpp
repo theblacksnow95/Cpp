@@ -26,7 +26,9 @@ class Contact
 		std::string	getNickname() const;
 		std::string	getDarkest() const;
 		std::string	getPhone() const;
+		// tools
 		bool		validField(const std::string &string);
+		bool		validChars(const std::string &string);
 		// Destructor
 		~Contact();
 };

@@ -5,6 +5,45 @@ PhoneBook::PhoneBook(): idx(0), ok(false)
 	std::cout << GRN <<"Default PHONEBOOK constructor called."<< RST << std::endl << std::endl;
 }
 
+
+
+std::string	cleanInput(const std::string &input)
+{
+	std::string tmp = input;
+	std::string res;
+	std::string whiteSpaces = " \t\v\r\n";
+	bool inspace = false;
+	for (size_t i = 0; i < tmp.length() -1; i ++)
+		if (std::isspace(tmp[i]))
+			tmp[i] = ' ';
+	for (size_t i = 0; i < tmp.length() ; i++)
+	{
+		if (std::isspace(tmp[i]))
+		{
+			if (!inspace)
+			{
+				res += ' ';
+				inspace = true;
+			}
+		}
+		else
+		{
+			res += input[i];
+			inspace = false;
+		}
+	}
+	std::size_t start = res.find_first_not_of(whiteSpaces);
+	std::size_t end = res.find_last_not_of(whiteSpaces);
+	if (start == end)
+		return (res);
+
+	std::cout << "END: " << end << std::endl;
+	std::cout << "START: " << start << std::endl;
+	std::cout << "-->" << res << std::endl;
+
+	return (res.substr(start, end - start + 1));
+}
+
 PhoneBook::~PhoneBook()
 {
 	std::cout << YLL << "Destructor PHONEBOOK called." << RST << std::endl;
@@ -23,37 +62,45 @@ void PhoneBook::Add()
 	do
 	{
 		std::cout << "First name: " << std::endl;
-		getline(std::cin, input);
-		contacts[i].setFname(input);
+
+			if (!getline(std::cin, input))
+			{
+				std::cout << "Exitinf from EOF." << std::endl;
+			}
+			std::string res(cleanInput(input));
+			contacts[i].setFname(res);
 	}
-	while (!contacts->validField(input));
+	while (!contacts->validField(input) || !contacts->validChars(input));
 	do
 	{
 		std::cout << "Last name: " << std::endl;
 		getline(std::cin, input);
-		contacts[i].setLname(input);
+		std::string res(cleanInput(input));
+		contacts[i].setLname(res);
 	}
 	while (!contacts->validField(input));
 	do
 	{
-	std::cout << "Nickname: " << std::endl;
-	getline(std::cin, input);
-	contacts[i].setNickname(input);
+		std::cout << "Nickname: " << std::endl;
+		getline(std::cin, input);
+		std::string res(cleanInput(input));
+		contacts[i].setNickname(res);
 	}
 	while (!contacts->validField(input));
 	do
 	{
-	std::cout << "Phone number: " << std::endl;
-	getline(std::cin, input);
-	contacts[i].setPhone(input);
+		std::cout << "Phone number: " << std::endl;
+		getline(std::cin, input);
+		contacts[i].setPhone(input);
 	}
 	while ((!contacts->validField(input) || input.find_first_not_of("+0987654321") != input.npos)
 			|| !(input.length() >= 9 && input.length() <= 11));
 	do
 	{
-	std::cout << "Darkest secret: " << std::endl;
-	getline(std::cin, input);
-	contacts[i].setDarkest(input);
+		std::cout << "Darkest secret: " << std::endl;
+		getline(std::cin, input);
+		std::string res(cleanInput(input));
+		contacts[i].setDarkest(res);
 	}
 	while (!contacts->validField(input));
 	std::cout << "contact --> [" << contacts[i].getFname() << "] added to contacts array." << std::endl;
