@@ -11,13 +11,11 @@ int main(int ac, char **av)
 			int	 len = s.length();
 			for (int i = 0; i < len; i++)
 			{
-				if (s[i] < 97 || s[i] > 122)
+				if (!isalpha(s[i]))
 					continue;
-				s[i] = s[i] - 32;
+				s[i] = toupper(s[i]);
 			}
 			std::cout << s;
-			if (i < ac - 1)
-				std::cout << ' ';
 		}
 		std::cout << std::endl;
 	}
