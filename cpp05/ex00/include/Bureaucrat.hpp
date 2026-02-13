@@ -18,7 +18,6 @@ class Bureaucrat
 
 		std::string		getName() const;
 		unsigned int	getGrade() const;
-		
 };
 
 
