@@ -11,7 +11,7 @@ OBJDIR = obj
 INCLUDE = include
 #################	SOURCES			##################################
 
-SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Bureaucrat.cpp $(SRCDIR)/
+SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Bureaucrat.cpp
 
 #################	OBJECTS			##################################
 
@@ -47,9 +47,12 @@ fclean:	clean
 
 re: clean all
 
+run: all
+	./$(TARGET)
+
 valg: re
 	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET)
 
-.PHONY: all clean fclean re del
+.PHONY: all clean fclean re valg run
 
 .SILENT:

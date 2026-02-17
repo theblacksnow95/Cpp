@@ -5,8 +5,10 @@ Bureaucrat::Bureaucrat(): _name("Paultionaire"), _grade(150)
 	std::cout << "Bureaucrat default constructor called" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const std::string& name, unsigned int grade): _name(name), _grade()
+Bureaucrat::Bureaucrat(const std::string& name, unsigned int grade): _name(name), _grade(grade)
 {
+	if (!_validGrade(grade))
+		std::cout << YLL << "Invalid grade value: " << grade << RST << std::endl;
 	std::cout << "Bureaucrat default constructor called" << std::endl;
 }
 
@@ -38,4 +40,30 @@ std::string Bureaucrat::getName() const
 unsigned int Bureaucrat::getGrade() const
 {
 	return (_grade);
+}
+
+bool	Bureaucrat::_validGrade(unsigned int grade) const
+{
+	if (grade > 150)
+		throw Bureaucrat::GradeTooLow();
+	if (grade < 1)
+		throw Bureaucrat::GradeTooLow();
+	return true;
+}
+
+void	Bureaucrat::increaseGrade() const
+{
+	if (_validGrade(_grade + 1))
+		_grade++;
+}
+
+const char * Bureaucrat::GradeTooHigh::what() const throw()
+{
+	return (GRADETOOHIGH);
+}
+
+const char* Bureaucrat::GradeTooLow::what() const throw()
+{
+	std::cout << YLL << "Lowest possible grade is: 150" << RST << std::endl;
+	return GRADETOOLOW;
 }
