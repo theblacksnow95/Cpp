@@ -67,10 +67,12 @@ void	Bureaucrat::decreaseGrade()
 
 const char* Bureaucrat::GradeTooHigh::what() const throw()
 {
+	std::cout << YLL << "Max valid grade is: 1" << RED <<std::endl;
 	return GRADETOOHIGH;
 }
 
 const char* Bureaucrat::GradeTooLow::what() const throw()
 {
+	std::cout << YLL << "Min valid grade is: 150" << RED << std::endl;
 	return GRADETOOLOW;
 }

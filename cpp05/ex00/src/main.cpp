@@ -18,9 +18,17 @@ int	main ()
 		try
 		{
 			Bureaucrat a("make", 2);
-			Bureaucrat b("Jhon", 150);
 			a.increaseGrade();
 			a.increaseGrade();
+		}
+		catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << RST << std::endl;
+		}
+		try
+		{
+			Bureaucrat b("other", 150);
+			b.decreaseGrade();
 		}
 		catch (std::exception & e)
 		{
