@@ -47,23 +47,30 @@ bool	Bureaucrat::_validGrade(unsigned int grade) const
 	if (grade > 150)
 		throw Bureaucrat::GradeTooLow();
 	if (grade < 1)
-		throw Bureaucrat::GradeTooLow();
+		throw Bureaucrat::GradeTooHigh();
 	return true;
 }
 
-void	Bureaucrat::increaseGrade() const
+void	Bureaucrat::increaseGrade()
 {
-	if (_validGrade(_grade + 1))
-		_grade++;
+	if (_validGrade(_grade - 1))
+		_grade  -= 1;
+	std::cout << GRN << _name << ": grade increased from: "<< _grade + 1 << ", to : " << _grade << RST << std::endl;	
 }
 
-const char * Bureaucrat::GradeTooHigh::what() const throw()
+void	Bureaucrat::decreaseGrade()
 {
-	return (GRADETOOHIGH);
+	if (_validGrade(_grade + 1))
+		_grade += 1;
+	std::cout << GRN << _name << ": grade decreased from: "<< _grade << ", to: " << _grade << RST << std::endl;
+}
+
+const char* Bureaucrat::GradeTooHigh::what() const throw()
+{
+	return GRADETOOHIGH;
 }
 
 const char* Bureaucrat::GradeTooLow::what() const throw()
 {
-	std::cout << YLL << "Lowest possible grade is: 150" << RST << std::endl;
 	return GRADETOOLOW;
 }

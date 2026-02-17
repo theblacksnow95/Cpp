@@ -24,13 +24,13 @@ class Bureaucrat
 
 		std::string		getName() const;
 		unsigned int	getGrade() const;
-		void			increaseGrade() const;
-		void			decreadeGrade() const;
+		void			increaseGrade();
+		void			decreaseGrade();
 
 		class GradeTooHigh : public std::exception 
 		{
 			public:
-				const char * what() const throw();
+				const char* what() const throw();
 		};
 
 		class GradeTooLow : public std::exception
