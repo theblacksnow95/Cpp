@@ -5,9 +5,9 @@ int	main ()
 	{
 		try
 		{
-			Bureaucrat b = Bureaucrat("algo", 150);
-			Bureaucrat a = Bureaucrat("name", 1);
-			std::cout << b.getName() << " , bureaucrat grade " << b.getGrade() << std::endl;
+			Bureaucrat b = Bureaucrat("Puchy", 150);
+			Bureaucrat a = Bureaucrat();
+			std::cout << a << std::endl << b << std::endl;
 		}
 		catch (std::exception & e)
 		{

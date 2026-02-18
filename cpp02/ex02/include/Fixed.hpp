@@ -27,7 +27,7 @@ public:
 	bool	operator==(const Fixed& other) const;
 	bool	operator!=(const Fixed& other) const;
 
-	// arithetic operators
+	// arithmetic operators
 	float	operator+(const Fixed& other) const;
 	float	operator-(const Fixed& other) const;
 	float	operator*(const Fixed& other) const;

@@ -9,7 +9,7 @@ Bureaucrat::Bureaucrat(const std::string& name, unsigned int grade): _name(name)
 {
 	if (!_validGrade(grade))
 		std::cout << YLL << "Invalid grade value: " << grade << RST << std::endl;
-	std::cout << "Bureaucrat default constructor called" << std::endl;
+	std::cout << "Bureaucrat constructor called" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other): _name(other._name), _grade(other._grade)
@@ -67,12 +67,19 @@ void	Bureaucrat::decreaseGrade()
 
 const char* Bureaucrat::GradeTooHigh::what() const throw()
 {
-	std::cout << YLL << "Max valid grade is: 1" << RED <<std::endl;
+	std::cout << "Max valid grade is: 1"  <<std::endl;
 	return GRADETOOHIGH;
 }
 
 const char* Bureaucrat::GradeTooLow::what() const throw()
 {
-	std::cout << YLL << "Min valid grade is: 150" << RED << std::endl;
+	std::cout << "Min valid grade is: 150" << std::endl;
 	return GRADETOOLOW;
+}
+
+
+std::ostream&	operator<<(std::ostream& os, const Bureaucrat& other)
+{
+	std::cout << other.getName() << ", bureaucrat grade " << other.getGrade();
+	return (os);
 }
