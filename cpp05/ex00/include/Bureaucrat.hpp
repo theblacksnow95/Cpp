@@ -22,12 +22,13 @@ class Bureaucrat
 		Bureaucrat&	operator=(const Bureaucrat& other);
 		~Bureaucrat();
 
+		// getters and member functions
 		std::string		getName() const;
 		unsigned int	getGrade() const;
 		void			increaseGrade();
 		void			decreaseGrade();
-		friend std::ostream&	operator<<(std::ostream& os, const Bureaucrat& other);
-
+		
+		// Custom Exception classes 
 		class GradeTooHigh : public std::exception 
 		{
 			public:
@@ -41,6 +42,7 @@ class Bureaucrat
 		};
 };
 
-
+// outside the class as we cannot use the 'friend' keyword
+std::ostream&	operator<<(std::ostream& os, const Bureaucrat& other);
 
 #endif

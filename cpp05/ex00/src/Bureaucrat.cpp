@@ -62,7 +62,7 @@ void	Bureaucrat::decreaseGrade()
 {
 	if (_validGrade(_grade + 1))
 		_grade += 1;
-	std::cout << GRN << _name << ": grade decreased from: "<< _grade << ", to: " << _grade << RST << std::endl;
+	std::cout << GRN << _name << ": grade decreased from: "<< _grade - 1 << ", to: " << _grade << RST << std::endl;
 }
 
 const char* Bureaucrat::GradeTooHigh::what() const throw()
