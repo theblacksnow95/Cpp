@@ -1,9 +1,10 @@
 #ifndef BUREAUCRAT_HPP
 #define BUREAUCRAT_HPP
 
+# include "colors.hpp"
+# include "Form.hpp"
 # include <iostream>
 # include <string>
-# include "colors.hpp"
 
 # define GRADETOOHIGH	"Grade is too high."
 # define GRADETOOLOW	"Grade is too low."
@@ -27,6 +28,9 @@ class Bureaucrat
 		void			increaseGrade();
 		void			decreaseGrade();
 		
+		// added signForm member function
+		void	signForm(Form& form);
+
 		// Custom Exception classes 
 		class GradeTooHigh : public std::exception 
 		{

@@ -3,7 +3,8 @@
 
 # include "colors.hpp"
 # include <iostream>
-#include <string>
+# include <string>
+# include "Bureaucrat.hpp"
 
 # define GRADETOOHIGH	"Grade is too high."
 # define GRADETOOLOW	"Grade is too low."
@@ -18,7 +19,7 @@ class Form
 		bool				_validGrade(unsigned int grade) const;
 	public:
 		Form();
-		Form(const std::string& name, unsigned int minSign, unsigned minExec);
+		Form(const std::string& name, unsigned int minSign, unsigned int minExec);
 		Form(const Form& other);
 		Form&	operator=(const Form& other);
 		~Form();
@@ -27,8 +28,10 @@ class Form
 		std::string		getName() const;
 		unsigned int	getSignGrade() const;
 		unsigned int	getExecGrade() const;
-		bool			isSigned() const;
+		bool			getSigned() const;
 
+		// member functions
+		void	beSigned(const Bureaucrat& Bur);
 
 		// Custom exception classes
 		class GradeTooHighException: public std::exception
@@ -44,7 +47,7 @@ class Form
 		};
 };
 
-
+//redirection operator overload 
 std::ostream&	operator<<(std::ostream& os, const Form& other);
 
 #endif

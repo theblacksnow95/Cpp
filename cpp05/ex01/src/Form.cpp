@@ -5,14 +5,15 @@ Form::Form():_name("Generic Form"), _signed(false), _minGradeSign(150), _minGrad
 	std::cout << "Form Default constructor called" << std::endl;
 }
 
-Form::Form(const std::string& name, unsigned int minSigned, unsigned int minExec): _name(name), _minGradeSign(minSigned), _minGradeExec(minExec)
+
+Form::Form(const std::string& name, unsigned int minSign, unsigned int minExec): _name(name), _minGradeSign(minSign), _minGradeExec(minExec)
 {
-	_validGrade(minSigned);
+	_validGrade(minSign);
 	_validGrade(minExec);
 	std::cout << "Form Constructor called" << std::endl;
 }
 
-Form::Form(const Form& other): _name(other._name), _minGradeSign(other._minGradeSign), _minGradeExec(other._minGradeExec), _signed(other._signed)
+Form::Form(const Form& other): _name(other._name),  _signed(other._signed), _minGradeSign(other._minGradeSign), _minGradeExec(other._minGradeExec)
 {
 	std::cout << "Form Copy constructor called" << std::endl;
 }
@@ -33,6 +34,7 @@ Form::~Form()
 	std::cout << "Form Destructor called." << std::endl;
 }
 
+// getters
 
 std::string	Form::getName() const
 {
@@ -49,13 +51,15 @@ unsigned int Form::getExecGrade() const
 	return (_minGradeExec);
 }
 
-bool	Form::isSigned() const
+bool	Form::getSigned() const
 {
 	if (_signed)
 		return (true);
 	else
 		return (false);
 }
+
+// grade validation and custom exception classes 
 
 bool	Form::_validGrade(unsigned int grade) const
 {
@@ -68,12 +72,44 @@ bool	Form::_validGrade(unsigned int grade) const
 
 const char* Form::GradeTooHighException::what() const throw()
 {
-	std::cout << "Max possible grade is: 1" << std::endl;
+	// std::cout << "Max possible grade is: 1" << std::endl;
 	return GRADETOOHIGH;
 }
 
 const char* Form::GradeTooLowException::what() const throw()
 {
-	std::cout << "Min posssible grade is: 150" << std::endl;
+	// std::cout << "Min posssible grade is: 150" << std::endl;
 	return GRADETOOLOW;
+}
+
+// beSigned member funtion
+void	Form::beSigned(const Bureaucrat& Bur)
+{
+	if (_signed)
+	{
+		std::cout << "form already signed" << std::endl;
+		return ;
+	}
+	if (Bur.getGrade() > this->getSignGrade())
+	{
+		std::cout << RED << "Grade too low to sign form." << RST << std::endl;
+		throw Form::GradeTooLowException();
+	}
+	if (Bur.getGrade() > this->getExecGrade())
+	{
+		std::cout << RED << "Grade too low to execute form." << RST << std::endl;
+		throw Form::GradeTooLowException();
+	}
+	else
+		this->_signed = true;
+}
+
+// redirection override operator
+std::ostream&	operator<<(std::ostream& os, const Form& other)
+{
+	std::cout << other.getName() << ", form has the next parameters: " << std::endl;
+	std::cout << "\tGrade required to be signed:\t" << other.getSignGrade() << std::endl;
+	std::cout << "\tGrade required to be executed:\t" << other.getExecGrade() << std::endl;
+	std::cout << "\tCurrent sign status:\t\t" << other.getSigned() << std::endl;
+	return (os);
 }
