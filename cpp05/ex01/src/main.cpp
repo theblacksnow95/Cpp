@@ -10,6 +10,7 @@ int	main ()
 			Bureaucrat bur = Bureaucrat();
 			Form	a = Form("gen1", 120, 100);
 			std::cout << BLE <<  a << RST << std::endl;
+			std::cout << "Trying to sign form" << std::endl;
 			bur.signForm(a);
 			std::cout << BLE <<  a << RST << std::endl;
 		}

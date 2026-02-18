@@ -9,6 +9,8 @@
 # define GRADETOOHIGH	"Grade is too high."
 # define GRADETOOLOW	"Grade is too low."
 
+class Bureaucrat;
+
 class Form
 {
 	private:
