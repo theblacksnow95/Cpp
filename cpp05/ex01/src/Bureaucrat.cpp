@@ -98,3 +98,4 @@ void	Bureaucrat::signForm(Form& form)
 	else
 		std::cout << RED << _name << " couldn't sign " << form.getName() << " because " << "grade is too low to sign" << std::endl;
 }
+// I should use beSigned with a try catch to be able to catch the exception before it gets to a higher level, its cleaner
