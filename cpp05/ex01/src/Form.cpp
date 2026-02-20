@@ -82,6 +82,7 @@ const char* Form::GradeTooLowException::what() const throw()
 	return GRADETOOLOW;
 }
 
+
 // beSigned member funtion
 void	Form::beSigned(const Bureaucrat& Bur)
 {
@@ -92,16 +93,9 @@ void	Form::beSigned(const Bureaucrat& Bur)
 	}
 	if (Bur.getGrade() > this->getSignGrade())
 	{
-		std::cout << RED << "Grade too low to sign form." << RST << std::endl;
 		throw Form::GradeTooLowException();
 	}
-	if (Bur.getGrade() > this->getExecGrade())
-	{
-		std::cout << RED << "Grade too low to execute form." << RST << std::endl;
-		throw Form::GradeTooLowException();
-	}
-	else
-		this->_signed = true;
+	this->_signed = true;
 }
 
 // redirection override operator
@@ -110,6 +104,6 @@ std::ostream&	operator<<(std::ostream& os, const Form& other)
 	std::cout << other.getName() << ", form has the next parameters: " << std::endl;
 	std::cout << "\tGrade required to be signed:\t" << other.getSignGrade() << std::endl;
 	std::cout << "\tGrade required to be executed:\t" << other.getExecGrade() << std::endl;
-	std::cout << "\tCurrent sign status:\t\t" << other.getSigned() << std::endl;
+	std::cout << "\tCurrent sign status:\t\t" << std::boolalpha << other.getSigned() << std::endl;
 	return (os);
 }

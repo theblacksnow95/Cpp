@@ -89,13 +89,20 @@ void	Bureaucrat::signForm(Form& form)
 {
 	if (form.getSigned())
 	{
-		std::cout << RED << _name << " couldn't sign " << form.getName() << " because the form was already signed";
+		std::cout << RED << _name << " couldn't sign " << form.getName() << " because the form was already signed" << RST << std::endl;
 		return ;
 	}
-	form.beSigned(*this);
-	if (form.getSigned())
-		std::cout << GRN << _name << ", signed " << form.getName() << RST << std::endl;
-	else
-		std::cout << RED << _name << " couldn't sign " << form.getName() << " because " << "grade is too low to sign" << std::endl;
+	try 
+	{
+		form.beSigned(*this);
+		if (form.getSigned())
+			std::cout << GRN << _name << " signed " << form.getName() << RST << std::endl;
+	}
+	catch (std::exception & e)
+	{
+		
+		std::cout << YLL << "\tException detected:" << RST << std::endl;
+		std::cout << RED << _name << " couldn't sign " << form.getName() << " because " << e.what() << RST << std::endl;
+	}
 }
 // I should use beSigned with a try catch to be able to catch the exception before it gets to a higher level, its cleaner
