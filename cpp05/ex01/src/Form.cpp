@@ -6,7 +6,7 @@ Form::Form():_name("Generic Form"), _signed(false), _minGradeSign(150), _minGrad
 }
 
 
-Form::Form(const std::string& name, unsigned int minSign, unsigned int minExec): _name(name), _minGradeSign(minSign), _minGradeExec(minExec)
+Form::Form(const std::string& name, unsigned int minSign, unsigned int minExec): _name(name), _signed(false), _minGradeSign(minSign), _minGradeExec(minExec)
 {
 	_validGrade(minSign);
 	_validGrade(minExec);
