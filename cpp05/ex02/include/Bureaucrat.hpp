@@ -32,6 +32,7 @@ class Bureaucrat
 		
 		// added signForm member function
 		void	signForm(AForm& form);
+		void	executeForm(const AForm& form);
 
 		// Custom Exception classes 
 		class GradeTooHigh : public std::exception 

@@ -106,3 +106,12 @@ void	Bureaucrat::signForm(AForm& form)
 	}
 }
 // I should use beSigned with a try catch to be able to catch the exception before it gets to a higher level, its cleaner
+
+
+void	Bureaucrat::executeForm(const AForm& form)
+{
+	try
+	{
+		form.
+	}
+}

@@ -1,5 +1,8 @@
 #include "ShrubberyCreationForm.hpp"
 
+void	fill_file(std::ofstream& outfile);
+
+
 ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery", 145, 137)
 {
 	std::ofstream	outfile("default_shrubbery");
@@ -7,7 +10,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery", 145, 137)
 	std::cout << "ShrubberyCreationForm Default constructor called" << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string& target): AForm("Shrubbery", 145, 137)
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target): AForm("Shrubbery", 145, 137)
 {
 	std::ofstream	outfile((target + "_shrubbery").c_str());
 	fill_file(outfile);
@@ -36,8 +39,19 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 	std::cout << "ShrubberyCreationForm Destructor called." << std::endl;
 }
 
+void	ShrubberyCreationForm::beSigned(const Bureaucrat& bur)
+{
+	if (_signed)
+	{
+		std::cout << "form already signed" << std::endl;
+		return ;
+	}
+	if (bur.getGrade() > this->getSignGrade())
+		throw AForm::GradeTooLowException();
+	this->_signed = true;
+}
 
 void	fill_file(std::ofstream& outfile)
 {
-	outfile << TREE << std::endl;
+	outfile << ASCIITREE << std::endl;
 }

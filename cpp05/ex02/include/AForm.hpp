@@ -35,6 +35,7 @@ class AForm
 
 		// member functions
 		virtual void	beSigned(const Bureaucrat& Bur) = 0;
+		void	execute(const Bureaucrat& executor);
 
 		// Custom exception classes
 		class GradeTooHighException: public std::exception

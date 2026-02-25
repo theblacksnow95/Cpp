@@ -107,3 +107,8 @@ std::ostream&	operator<<(std::ostream& os, const AForm& other)
 	std::cout << "\tCurrent sign status:\t\t" << std::boolalpha << other.getSigned() << std::endl;
 	return (os);
 }
+
+void	AForm::execute(const Bureaucrat& executor)
+{
+	 
+}
