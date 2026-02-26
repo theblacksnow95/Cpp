@@ -12,7 +12,7 @@ INCLUDE = include
 #################	SOURCES			##################################
 
 SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Bureaucrat.cpp $(SRCDIR)/AForm.cpp $(SRCDIR)/ShrubberyCreationForm.cpp \
-	  $(SRCDIR)/RobotomyRequestForm.cpp $(SRCDIR)/PresidentialPardonForm.cpp
+	  $(SRCDIR)/RobotomyRequestForm.cpp $(SRCDIR)/PresidentialPardonForm.cpp $(SRCDIR)/Intern.cpp
 
 #################	OBJECTS			##################################
 
