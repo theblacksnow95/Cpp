@@ -1,12 +1,12 @@
 #include "RobotomyRequestForm.hpp"
 
-RobotomyRequestForm::RobotomyRequestForm(): AForm("Robotomy Form", 72, 45), _target("Unkown")
+RobotomyRequestForm::RobotomyRequestForm(): AForm("Robotomy", 72, 45), _target("Unkown")
 {
 	if (DEBUG)
 		std::cout << "RobotomyRequestForm Default constructor called" << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const std::string& target): AForm("Robotomy Form", 72, 45), _target(target)
+RobotomyRequestForm::RobotomyRequestForm(const std::string& target): AForm("Robotomy", 72, 45), _target(target)
 {
 	if (DEBUG)
 		std::cout << "RobotomyRequestForm constructor called" << std::endl;
@@ -22,7 +22,7 @@ RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other): AFor
 
 RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
 {
-	
+
 	if (this != &other)
 	{
 		_target = other._target;

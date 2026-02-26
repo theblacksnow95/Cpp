@@ -1,6 +1,6 @@
 #################	TARGET & FLAGS	##################################
 
-TARGET = AForms
+TARGET = Intern
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -g

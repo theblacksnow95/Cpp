@@ -15,7 +15,7 @@ Intern::Intern(const Intern& other)
 
 Intern& Intern::operator=(const Intern& other)
 {
-	
+
 	if (this != &other)
 	{
 		*this = other;
@@ -31,14 +31,38 @@ Intern::~Intern()
 		std::cout << "Intern Destructor called." << std::endl;
 }
 
+const char* Intern::WrongFormNameException::what() const throw()
+{
+	return WRONGFORMNAME;
+}
+
+AForm* Intern::ShrubberyForm(const std::string& target)
+{
+	return new ShrubberyCreationForm(target);
+}
+
+AForm* Intern::RobotomyForm(const std::string& target)
+{
+	return new RobotomyRequestForm(target);
+}
+
+AForm* Intern::PardonForm(const std::string& target)
+{
+	return new PresidentialPardonForm(target);
+}
 
 AForm*	Intern::makeform(const std::string& formName, const std::string& target)
 {
-	// if (formName == SHRUBBERY)
-	// {
-	// 	return (new ShrubberyCreationForm(target));
-	// }
-	if (formName != SHRUBBERY)
-		throw 
-	return new
+	AForm *tmp = NULL;
+	std::string arr[] = {"shrubbery request", "robotomy request", "pardon request"};
+	AForm*	(Intern::*func[])(const std::string& target) = {&Intern::ShrubberyForm, &Intern::RobotomyForm, &Intern::PardonForm};
+	for (int i = 0; i < 3; i++)
+	{
+		if (arr[i] == formName)
+			tmp = (this->*func[i])(target);
+		if (i == 2 && !tmp)
+			throw Intern::WrongFormNameException();
+	}
+	std::cout << YLL << "\tIntern creates: " << tmp->getName() << RST << std::endl;
+	return tmp;
 }

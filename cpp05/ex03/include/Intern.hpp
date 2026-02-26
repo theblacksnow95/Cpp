@@ -8,14 +8,15 @@
 # include "ShrubberyCreationForm.hpp"
 # include "RobotomyRequestForm.hpp"
 # include "PresidentialPardonForm.hpp"
-# define	SHRUBBERY	"shrubbery request"
-# define	ROBOTOMY	"robotomy request"
-# define	PPARDON		"Pardon Request"
+# define	WRONGFORMNAME	"Requested form does not exist, cannot create a form."
 
 class Intern
 {
 	private:
 		std::string _name;
+		AForm*	ShrubberyForm(const std::string& target);
+		AForm*	RobotomyForm(const std::string& target);
+		AForm*	PardonForm(const std::string& target);
 
 	public:
 		Intern();
@@ -24,6 +25,12 @@ class Intern
 		~Intern();
 
 		AForm*	makeform(const std::string& formName, const std::string& target);
+
+		class WrongFormNameException: public std::exception
+		{
+			public:
+				const char* what() const throw();
+		};
 };
 
 

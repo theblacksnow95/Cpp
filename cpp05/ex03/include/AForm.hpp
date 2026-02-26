@@ -28,7 +28,7 @@ class AForm
 		AForm(const std::string& name, unsigned int minSign, unsigned int minExec);
 		AForm(const AForm& other);
 		AForm&	operator=(const AForm& other);
-		~AForm();
+		virtual ~AForm();
 
 		// getters
 		std::string		getName() const;
@@ -65,7 +65,7 @@ class AForm
 		};
 };
 
-//redirection operator overload 
+//redirection operator overload
 std::ostream&	operator<<(std::ostream& os, const AForm& other);
 
 #endif

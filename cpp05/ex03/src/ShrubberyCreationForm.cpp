@@ -1,13 +1,13 @@
 #include "ShrubberyCreationForm.hpp"
 
-ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery Form", 145, 137)
+ShrubberyCreationForm::ShrubberyCreationForm(): AForm("Shrubbery", 145, 137)
 {
 	_target = "Unkown";
 	if (DEBUG)
 		std::cout << "ShrubberyCreationForm Default constructor called" << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target): AForm("Shrubbery Form", 145, 137), _target(target)
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target): AForm("Shrubbery", 145, 137), _target(target)
 {
 	if (DEBUG)
 		std::cout << "ShrubberyCreationForm Default constructor called" << std::endl;
@@ -22,7 +22,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other)
 
 ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other)
 {
-	
+
 	if (this != &other)
 	{
 		_target = other._target;
