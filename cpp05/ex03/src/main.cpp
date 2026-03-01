@@ -24,7 +24,7 @@ int	main ()
 		{
 			delete form;
 			std::cout << YLL << "\t\tException detected:" << RST << std::endl;
-			std::cout << RED << e.what() << RST << std::endl;
+			std::cerr << RED << e.what() << RST << std::endl;
 		}
 		try
 		{
@@ -43,7 +43,7 @@ int	main ()
 		{
 			delete form;
 			std::cout << YLL << "\t\tException detected:" << RST << std::endl;
-			std::cout << RED << e.what() << RST << std::endl;
+			std::cerr << RED << e.what() << RST << std::endl;
 		}
 
 	}
