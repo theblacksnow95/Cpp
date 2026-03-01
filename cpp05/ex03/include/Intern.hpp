@@ -8,7 +8,7 @@
 # include "ShrubberyCreationForm.hpp"
 # include "RobotomyRequestForm.hpp"
 # include "PresidentialPardonForm.hpp"
-# define	WRONGFORMNAME	"Requested form does not exist, cannot create a form."
+# define	WRONGFORMNAME	"Requested form does not exist, cannot create a form. The intern is crying in the bathroom now, good job!"
 
 class Intern
 {
