@@ -8,13 +8,13 @@
 class ScalarConverter
 {
 	private:
-		std::string	_literal;
-
-	public:
 		ScalarConverter();
+	public:
 		ScalarConverter(const ScalarConverter& other);
 		ScalarConverter&	operator=(const ScalarConverter& other);
-		~ScalarConverter();
+		virtual ~ScalarConverter();
+
+		void	convert(std::string& literal) const;
 };
 
 
