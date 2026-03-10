@@ -1,6 +1,6 @@
 #################	TARGET & FLAGS	##################################
 
-TARGET = Bureaucrat
+TARGET = Scalar
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -g
@@ -11,7 +11,7 @@ OBJDIR = obj
 INCLUDE = include
 #################	SOURCES			##################################
 
-SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Bureaucrat.cpp
+SRC = $(SRCDIR)/main.cpp $(SRCDIR)/ScalarConverter.cpp
 
 #################	OBJECTS			##################################
 
