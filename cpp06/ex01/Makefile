@@ -50,10 +50,10 @@ fclean:	clean
 re: clean all
 
 run: all
-	./$(TARGET) "*"
+	./$(TARGET)
 
 valg: re
-	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET) "-inf"
+	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET)
 
 .PHONY: all clean fclean re valg run
 

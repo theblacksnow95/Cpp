@@ -2,11 +2,13 @@
 
 int	main(void)
 {
-	Data*data = new Data;
-	data->value = 0;
-	uintptr_t ptr = Serializer::serialize(data);
+	Data data;
+	data.value = 42;
+	Data*	start = &data;
+	uintptr_t ptr = Serializer::serialize(start);
 	Data *other = Serializer::deserialize(ptr);
 
-	std::cout << BLE << "Data serialized: " << &ptr << RST << std::endl;
-	std::cout << GRN << "Deserialized data: " << &other << RST << std::endl;
+	std::cout << BLE << "Data serialized:\t" << start << RST << std::endl;
+	std::cout << GRN << "Deserialized data:\t" << other << RST << std::endl;
+	std::cout << YLL << other->value << RST << std::endl;
 }
