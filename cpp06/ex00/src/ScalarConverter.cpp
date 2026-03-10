@@ -28,7 +28,7 @@ ScalarConverter::~ScalarConverter()
 
 std::string	ScalarConverter::charCheck(std::string& literal)
 {
-	if (literal.length() == 1 && !(literal.find_first_not_of("0123456789") != literal.npos))
+	if (literal.length() == 1 && (literal.find_first_not_of("0123456789") != literal.npos))
 	{
 		return (CHAR);
 	}
@@ -38,25 +38,45 @@ std::string	ScalarConverter::charCheck(std::string& literal)
 std::string	ScalarConverter::intCheck(std::string& literal)
 {
 
-	if (literal.length() <= 10 && (literal.find_first_not_of("0123456789") != literal.npos))
+	if (literal.length() <= 11 && !(literal.find_first_not_of("-0123456789") != literal.npos))
 	{
+		if (literal.find("-") != literal.npos && literal.find("-") != 0)
+			return (ERROR);
+		if (atol(literal.c_str()) > INT_MAX || atol(literal.c_str()) < INT_MIN)
+			return (ERROR);
 		return (INT);
 	}
 	return (ERROR);
 }
 
-
+std::string	ScalarConverter::floatCheck(std::string& literal)
+{
+	size_t sep_pos = literal.find(".");
+	if (literal.find("f") == literal.npos)
+		return (ERROR);
+	if ((literal.find_first_not_of("-0123456789f.") != literal.npos))
+		return (ERROR);
+	if (sep_pos == literal.npos || sep_pos == 0 || sep_pos == literal.length() || literal.find_last_of(".") != sep_pos)
+		return (ERROR);
+	std::stringstream ss(literal);
+	float num;
+	ss >> num;
+	if (num)
+		return (FLOAT);
+	else
+		return (ERROR);
+}
 
 // Convert method
 
 std::string	ScalarConverter::identify(std::string& literal)
 {
 	std::string tmp;
-	std::string	(ScalarConverter::*func[])(std::string& literal) = {&ScalarConverter::charCheck, &ScalarConverter::intCheck};
-	for (int i = 0; i < 2; i++)
+	std::string	(ScalarConverter::*func[])(std::string& literal) = {&ScalarConverter::charCheck, &ScalarConverter::intCheck, &ScalarConverter::floatCheck};
+	for (int i = 0; i < 3; i++)
 	{
 		tmp = (this->*func[i])(literal);
-		if (!tmp.empty() && tmp == ERROR)
+		if (!tmp.empty() && tmp != ERROR)
 			return tmp;
 		if (i == 1 && tmp.empty() && tmp == ERROR)
 			return (ERROR);

@@ -5,6 +5,8 @@
 # include <iostream>
 # include <string>
 # include <limits.h>
+# include <cstdlib>
+# include <sstream>
 
 # define	CHAR	"CHAR"
 # define	INT		"INT"
