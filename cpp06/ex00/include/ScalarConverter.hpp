@@ -17,6 +17,10 @@
 class ScalarConverter
 {
 	private:
+		char	_valChar;
+		int		_valInt;
+		float	_valFloat;
+		double	_valDouble;
 		ScalarConverter();
 		ScalarConverter(const ScalarConverter& other);
 		ScalarConverter&	operator=(const ScalarConverter& other);
@@ -26,6 +30,7 @@ class ScalarConverter
 		std::string	floatCheck(std::string& literal);
 		std::string	doubleCheck(std::string& literal);
 		std::string	identify(std::string& literal);
+		void	conversion(std::string& type);
 
 	public:
 		static void	convert(std::string& literal) ;

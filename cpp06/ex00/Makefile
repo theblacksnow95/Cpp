@@ -1,6 +1,6 @@
 #################	TARGET & FLAGS	##################################
 
-TARGET = Scalar
+TARGET = convert
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -g

@@ -12,4 +12,5 @@ int	main (int ac, char **av)
 		std::string input = av[1];
 		ScalarConverter::convert(input);
 	}
+	return (0);
 }
