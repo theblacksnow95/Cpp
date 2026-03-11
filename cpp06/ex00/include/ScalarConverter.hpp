@@ -7,12 +7,14 @@
 # include <limits.h>
 # include <cstdlib>
 # include <sstream>
+# include <iomanip>
 
 # define	CHAR	"CHAR"
 # define	INT		"INT"
 # define	FLOAT	"FLOAT"
 # define	DOUBLE	"DOUBLE"
 # define	ERROR	"ERROR"
+# define	PSEUDO	"PSEUDO"
 
 class ScalarConverter
 {
@@ -29,8 +31,9 @@ class ScalarConverter
 		std::string	intCheck(std::string& literal);
 		std::string	floatCheck(std::string& literal);
 		std::string	doubleCheck(std::string& literal);
+		std::string	pseudoCheck(std::string& literal);
 		std::string	identify(std::string& literal);
-		void	conversion(std::string& type);
+		void	conversion(std::string& type, std::string& literal);
 
 	public:
 		static void	convert(std::string& literal) ;

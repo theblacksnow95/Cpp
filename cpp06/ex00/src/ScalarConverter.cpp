@@ -2,7 +2,7 @@
 
 ScalarConverter::ScalarConverter()
 {
-	std::cout << "ScalarConverter Default constructor called" << std::endl;
+	// std::cout << "ScalarConverter Default constructor called" << std::endl;
 }
 
 ScalarConverter::ScalarConverter(const ScalarConverter& other)
@@ -23,7 +23,7 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other)
 
 ScalarConverter::~ScalarConverter()
 {
-	std::cout << "ScalarConverter Destructor called." << std::endl;
+	// std::cout << "ScalarConverter Destructor called." << std::endl;
 }
 
 std::string	ScalarConverter::charCheck(std::string& literal)
@@ -90,47 +90,127 @@ std::string	ScalarConverter::floatCheck(std::string& literal)
 		return (ERROR);
 }
 
+std::string	ScalarConverter::pseudoCheck(std::string& literal)
+{
+	std::string arr[] = {"nan", "nanf", "+inf", "-inf", "+inff", "-inff"};
+	for (int i = 0; i < 6; i++)
+	{
+		if (literal == arr[i])
+		{
+			return (PSEUDO);
+		}
+	}
+	return (ERROR);
+}
+
 // Convert method
 
 std::string	ScalarConverter::identify(std::string& literal)
 {
 	std::string tmp;
 	std::string	(ScalarConverter::*func[])(std::string& literal) = \
-	{&ScalarConverter::charCheck, &ScalarConverter::intCheck, &ScalarConverter::floatCheck, &ScalarConverter::doubleCheck};
-	for (int i = 0; i < 4; i++)
+	{&ScalarConverter::charCheck, &ScalarConverter::intCheck, &ScalarConverter::floatCheck, &ScalarConverter::doubleCheck, &ScalarConverter::pseudoCheck};
+	for (int i = 0; i < 5; i++)
 	{
 		tmp = (this->*func[i])(literal);
 		if (!tmp.empty() && tmp != ERROR)
 			return tmp;
-		if (i == 3 && tmp.empty() && tmp == ERROR)
+		if (i == 4 && tmp.empty() && tmp == ERROR)
 			return (ERROR);
 	}
 	return (ERROR);
 }
 
-void	ScalarConverter::conversion(std::string& type)
+void	ScalarConverter::conversion(std::string& type, std::string& literal)
 {
 	if (type == CHAR)
 	{
 		if (!isprint(_valChar))
 			std::cout << BLE << "char:\tNon displayable" << RST << std::endl;
 		else
-			std::cout << BLE<< "char:\t" << _valChar << RST << std::endl;
+			std::cout << BLE << "char:\t\'" << _valChar << "\'"<< RST << std::endl;
 		_valInt = static_cast<int>(_valChar);
 		std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
 		_valFloat = static_cast<float>(_valChar);
-		std::cout << BLE << "float:\t" << _valFloat << "f" <<RST << std::endl;
+		std::cout << std::fixed << std::setprecision(2) << BLE << "float:\t" << _valFloat << "f" << RST << std::endl;
 		_valDouble = static_cast<double>(_valChar);
 		std::cout << BLE << "double:\t" << _valDouble << RST << std::endl;
 	}
-	// if (type == INT)
-	// {
-	// 	long int val = atol(literal.c_str());
-
-	// }
-
+	if (type == INT)
+	{
+		if (_valInt <= 127 && _valInt > -1)
+		{
+			_valChar = static_cast<char>(_valInt);
+			if (!isprint(_valChar))
+				std::cout << BLE << "char:\tNon displayable" << RST << std::endl;
+			else
+				std::cout << BLE << "char:\t\'" << _valChar << "\'"<< RST << std::endl;
+		}
+		else
+			std::cout << BLE << "char:\t" << "impossible" << RST << std::endl;
+		std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
+		_valFloat = static_cast<float>(_valInt);
+		std::cout << std::fixed << BLE << "float:\t" << std::setprecision(2) << _valFloat << "f" << RST << std::endl;
+		_valDouble = static_cast<double>(_valInt);
+		std::cout << std::fixed << BLE << "double:\t" << std::setprecision(2) << _valDouble << RST << std::endl;
+	}
+	if (type == FLOAT)
+	{
+		if (_valFloat <= 127 || _valFloat >= 0)
+		{
+			_valChar = static_cast<char>(_valFloat);
+			if (!isprint(_valChar))
+				std::cout << BLE << "char:\tNon displayable" << RST << std::endl;
+			else
+				std::cout << BLE << "char:\t\'" << _valChar << "\'"<< RST << std::endl;
+		}
+		else
+			std::cout << BLE << "char:\t" << "impossible" << RST << std::endl;
+		_valInt = static_cast<int>(_valFloat);
+		std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
+		std::cout << std::fixed << std::setprecision(2) << BLE << "float:\t" << _valFloat << "f" << RST << std::endl;
+		_valDouble = static_cast<double>(_valFloat);
+		std::cout << std::fixed << BLE << "double:\t" << std::setprecision(2) << _valDouble << RST << std::endl;
+	}
+	if (type == DOUBLE)
+	{
+		if (_valInt <= 127 && _valDouble >= 0)
+		{
+			_valChar = static_cast<char>(_valDouble);
+			if (!isprint(_valChar))
+				std::cout << BLE << "char:\tNon displayable" << RST << std::endl;
+			else
+				std::cout << BLE << "char:\t\'" << _valChar << "\'"<< RST << std::endl;
+		}
+		else
+			std::cout << BLE << "char:\t" << "impossible" << RST << std::endl;
+		_valInt = static_cast<int>(_valDouble);
+		std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
+		_valFloat = static_cast<double>(_valDouble);
+		std::cout << std::fixed << std::setprecision(2) << BLE << "float:\t" << _valFloat << "f" << RST << std::endl;
+		std::cout << std::fixed << BLE << "double:\t" << std::setprecision(2) << _valDouble << RST << std::endl;
+	}
+	if (type == PSEUDO)
+	{
+		std::cout << BLE << "char:\timpossible" << RST << std::endl;
+		std::cout << BLE << "int:\timpossible" << RST << std::endl;
+		if (literal == "nan" || literal == "nanf")
+		{
+			std::cout << BLE << "float:\tnanf" << RST << std::endl;
+			std::cout << BLE << "double:\tnan" << RST << std::endl;
+		}
+		if (literal.find("-") != literal.npos && literal.find("inf"))
+		{
+			std::cout << BLE << "float:\t-inff" << RST << std::endl;
+			std::cout << BLE << "double:\t-inf" << RST << std::endl;
+		}
+		if (literal.find("+") != literal.npos && literal.find("inf"))
+		{
+			std::cout << BLE << "float:\t+inff" << RST << std::endl;
+			std::cout << BLE << "double:\t+inf" << RST << std::endl;
+		}
+	}
 }
-
 
 void	ScalarConverter::convert(std::string& literal)
 {
@@ -138,7 +218,6 @@ void	ScalarConverter::convert(std::string& literal)
 	ScalarConverter a = ScalarConverter();
 	type = a.identify(literal) ;
 	std::cout << YLL << type << RST << std::endl;
-	a.conversion(type);
-
+	a.conversion(type, literal);
 
 }
