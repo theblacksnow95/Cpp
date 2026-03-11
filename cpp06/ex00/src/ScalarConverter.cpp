@@ -174,7 +174,7 @@ void	ScalarConverter::conversion(std::string& type, std::string& literal)
 	}
 	if (type == DOUBLE)
 	{
-		if (_valInt <= 127 && _valDouble >= 0)
+		if (_valDouble <= 127 && _valDouble >= 0)
 		{
 			_valChar = static_cast<char>(_valDouble);
 			if (!isprint(_valChar))
@@ -185,7 +185,10 @@ void	ScalarConverter::conversion(std::string& type, std::string& literal)
 		else
 			std::cout << BLE << "char:\t" << "impossible" << RST << std::endl;
 		_valInt = static_cast<int>(_valDouble);
-		std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
+		if (_valInt == INT_MIN && _valDouble != INT_MIN)
+			std::cout << BLE << "int:\timpossible" << RST << std::endl;
+		else
+			std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
 		_valFloat = static_cast<double>(_valDouble);
 		std::cout << std::fixed << std::setprecision(2) << BLE << "float:\t" << _valFloat << "f" << RST << std::endl;
 		std::cout << std::fixed << BLE << "double:\t" << std::setprecision(2) << _valDouble << RST << std::endl;
