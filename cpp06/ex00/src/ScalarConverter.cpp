@@ -166,7 +166,10 @@ void	ScalarConverter::conversion(std::string& type, std::string& literal)
 		else
 			std::cout << BLE << "char:\t" << "impossible" << RST << std::endl;
 		_valInt = static_cast<int>(_valFloat);
-		std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
+		if (_valInt == INT_MIN)
+			std::cout << BLE << "int:\t" << "impossible" << RST << std::endl;
+		else
+			std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
 		std::cout << std::fixed << std::setprecision(2) << BLE << "float:\t" << _valFloat << "f" << RST << std::endl;
 		_valDouble = static_cast<double>(_valFloat);
 		std::cout << std::fixed << BLE << "double:\t" << std::setprecision(2) << _valDouble << RST << std::endl;
