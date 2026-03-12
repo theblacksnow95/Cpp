@@ -59,7 +59,6 @@ std::string	ScalarConverter::doubleCheck(std::string& literal)
 	if (literal.find_first_not_of("+-0123456789.") !=  literal.npos)
 		return (ERROR);
 	tmp = strtod(literal.c_str(), NULL);
-	std::cout << RED << "Float value: " << tmp << RST << std::endl;
 	if (tmp != literal.npos)
 	{
 		_valDouble = tmp;
@@ -80,7 +79,7 @@ std::string	ScalarConverter::floatCheck(std::string& literal)
 		return (ERROR);
 	std::stringstream ss(literal);
 	float num;
-	ss >> num;
+	num =  strtof(literal.c_str(), NULL);
 	if (num != literal.npos)
 	{
 		_valFloat = num;
@@ -189,7 +188,7 @@ void	ScalarConverter::conversion(std::string& type, std::string& literal)
 			std::cout << BLE << "int:\timpossible" << RST << std::endl;
 		else
 			std::cout << BLE << "int:\t" << _valInt << RST << std::endl;
-		_valFloat = static_cast<double>(_valDouble);
+		_valFloat = static_cast<float>(_valDouble);
 		std::cout << std::fixed << std::setprecision(2) << BLE << "float:\t" << _valFloat << "f" << RST << std::endl;
 		std::cout << std::fixed << BLE << "double:\t" << std::setprecision(2) << _valDouble << RST << std::endl;
 	}
