@@ -11,7 +11,7 @@ OBJDIR = obj
 INCLUDE = include
 #################	SOURCES			##################################
 
-SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Serializer.cpp
+SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Base.cpp
 
 #################	OBJECTS			##################################
 

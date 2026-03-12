@@ -4,15 +4,17 @@
 # include "colors.hpp"
 # include <iostream>
 # include <string>
+# include <cstdlib>
 
 class Base
 {
-	private:
-		Base();
 	public:
 		virtual ~Base();
-		Base*	generate(void);
+
 };
 
+Base*	generate(void);
+void	identify(Base* p);
+void	identify(Base& p);
 
 #endif
