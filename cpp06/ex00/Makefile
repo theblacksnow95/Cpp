@@ -53,7 +53,7 @@ run: all
 	./$(TARGET) "*"
 
 valg: re
-	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET) "-inf"
+	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET) "42"
 
 .PHONY: all clean fclean re valg run
 
