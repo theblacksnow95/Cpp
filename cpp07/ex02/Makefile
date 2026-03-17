@@ -11,12 +11,11 @@ OBJDIR = obj
 INCLUDE = include
 #################	SOURCES			##################################
 
-SRC = $(SRCDIR)/main.cpp
+SRC = $(SRCDIR)/main.cpp 	
 
 #################	OBJECTS			##################################
 
 OBJ = $(SRC:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
-
 #################	ANSI COLORS		##################################
 
 GRN = \033[0;32m
@@ -30,7 +29,7 @@ PRP = \033[0;35m
 
 all: $(TARGET)
 
-$(TARGET): $(OBJ)
+$(TARGET): $(OBJ) 
 	@echo "$(YLL)Compiling objects... $(RST)"
 	@echo "$(YLL)Compiling Target $(GRN) $(TARGET)... $(RST)"
 	$(CC) $(CFLAGS) -I$(INCLUDE) $(C98)  $(OBJ) -o $(TARGET)
@@ -38,6 +37,7 @@ $(TARGET): $(OBJ)
 $(OBJDIR)/%.o:$(SRCDIR)/%.cpp
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -I$(INCLUDE) $(C98) -c $< -o $@
+
 
 clean:
 	@echo "$(YLL)Removing objects...$(RST)"
