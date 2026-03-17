@@ -1,6 +1,6 @@
 #################	TARGET & FLAGS	##################################
 
-TARGET = iter
+TARGET = array
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -g
