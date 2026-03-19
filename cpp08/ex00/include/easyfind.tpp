@@ -1,4 +1,14 @@
 #include "easyfind.hpp"
+# define ERRORFIND	"Value not present in the secuence, try with another."
+
+class EValueNotFound: public std::exception
+{
+	public:
+		const char *what() const throw()
+		{
+			return ERRORFIND;
+		}
+};
 
 template <typename T>
 void	easyfind(const T &cont, int target)
@@ -11,6 +21,6 @@ void	easyfind(const T &cont, int target)
 	}
 	else
 	{
-		EValueNotFound a = 0;
+		throw EValueNotFound();
 	}
 }
