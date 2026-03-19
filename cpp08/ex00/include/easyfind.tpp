@@ -10,5 +10,7 @@ void	easyfind(const T &cont, int target)
 		std::cout << YLL << "Found value: " << target << " in position: " << pos << RST << std::endl;
 	}
 	else
-		std::cout << RED << "Value "<< target << " not found." << RST << std::endl;
+	{
+		EValueNotFound a = 0;
+	}
 }

@@ -23,6 +23,7 @@ int main()
 	std::vector<int>	v;
 	std::deque<int>		d;
 	std::list<int>		l;
+	
 	init_conts(v);
 	init_conts(d);
 	init_conts(l);
