@@ -1,6 +1,6 @@
 #################	TARGET & FLAGS	##################################
 
-TARGET = functions
+TARGET = easyfindd
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -g
