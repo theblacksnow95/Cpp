@@ -11,7 +11,7 @@ OBJDIR = obj
 INCLUDE = include
 #################	SOURCES			##################################
 
-SRC = $(SRCDIR)/main.cpp
+SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Span.cpp
 
 #################	OBJECTS			##################################
 
@@ -50,7 +50,7 @@ fclean:	clean
 re: clean all
 
 run: all
-	./$(TARGET) 
+	./$(TARGET)
 	@make fclean
 
 valg: re
