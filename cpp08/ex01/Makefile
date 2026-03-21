@@ -1,6 +1,6 @@
 #################	TARGET & FLAGS	##################################
 
-TARGET = easyfind
+TARGET = Span
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -g

@@ -17,7 +17,7 @@ void	easyfind(const T &cont, int target)
 	if (it != cont.end())
 	{
 		int	pos = std::distance(cont.begin(), it);
-		std::cout << YLL << "Found value: " << target << " in position: " << pos << RST << std::endl;
+		std::cout << YLL << "\t" << "Found value: " << target << " in position: " << pos << RST << std::endl;
 	}
 	else
 	{
