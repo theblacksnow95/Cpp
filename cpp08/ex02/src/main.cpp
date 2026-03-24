@@ -1,77 +1,69 @@
 #include "MutantStack.hpp"
-
-std::ostream&	operator<<(std::ostream& o, const std::vector<int> a)
-{
-	for (size_t i = 0; i < a.size(); i++)
-	{
-		o << a[i] << " " ;
-	}
-	return (o);
-}
-
-void	fastAdd(Span& a, unsigned int n)
-{
-
-	for (unsigned int i = 0; i < n; i++)
-	{
-		long int num = rand();
-		a.addNumber(num);
-	}
-}
+#include "MutantStack.tpp"
+#include <list>
 
 int main()
 {
-	srand(time(NULL));
-	Span a = Span(5);
-	Span b(10);
-	Span c = Span(20000);
-	std::vector<int> fill(10, 12);
-	std::cout << RED << "\t" << "test container: " << fill << RST << std::endl;
-	try
+	MutantStack<int> mstack;
+	std::list<int> test;
 	{
-		std::cout << PRL << "Basic test: addNumber" << RST << std::endl;
-		a.addNumber(9);
-		a.addNumber(11);
-		a.addNumber(3);
-		a.addNumber(6);
-		a.addNumber(17);
-		b.addNumber(fill.begin(), fill.end());
-		std::cout << "\t" << "Shortest Span: " << a.shortestSpan() << std::endl;
-		std::cout << "\t" << "Longest Span: " << a.longestSpan() << std::endl;
-		std::cout << "\t" << "Shortest Span: " << b.shortestSpan() << std::endl;
-		std::cout << "\t" << "Longest Span: " << b.longestSpan() << std::endl;
-
-		std::cout << "\t" << a << std::endl;
-		std::cout << "\t" << b << std::endl;
+		std::cout << PRL << "Test from the subject: " << RST << std::endl;
+		mstack.push(5);
+		mstack.push(17);
+		std::cout << "\t" << "top: " << mstack.top() << std::endl;
+		mstack.pop();
+		std::cout << "\t" << "Poped one out" << std::endl;
+		std::cout << "\t" << "size: " << mstack.size() << std::endl;
+		mstack.push(3);
+		mstack.push(5);
+		mstack.push(737);
+		mstack.push(0);
+		MutantStack<int>::iterator it = mstack.begin();
+		MutantStack<int>::iterator ite = mstack.end();
+		++it;
+		--it;
+		std::cout << "\t" << "Printing all" << std::endl;
+		while (it != ite)
+		{
+		std::cout << "\t" << *it << std::endl;
+		++it;
+		}
+		std::stack<int> s(mstack);
 	}
-	catch (std::exception& e)
 	{
-		std::cout << YLL << "Exception detected: " << RST << std::endl;
-		std::cout << RED << "\t" << e.what() << RST << std::endl;
+		std::cout << PRL << "Test with list: " << RST << std::endl;
+		test.push_back(5);
+		test.push_back(17);
+		std::cout << "\t" << "top: " << test.back() << std::endl;
+		test.pop_back();
+		std::cout << "\t" << "Poped one out" << std::endl;
+		std::cout << "\t" << "size: " << test.size() << std::endl;
+		test.push_back(3);
+		test.push_back(5);
+		test.push_back(737);
+		test.push_back(0);
+		std::list<int>::iterator it = test.begin();
+		std::list<int>::iterator ite = test.end();
+		++it;
+		--it;
+		std::cout << "\t" << "Printing all:" << std::endl;
+		while (it != ite)
+		{
+		std::cout << "\t" << *it << std::endl;
+		++it;
+		}
 	}
-	try
 	{
-		std::cout << PRL << "Test with multiple values" << RST << std::endl;
-		fastAdd(c, 19999);
-		std::cout << "Shortest span c: " <<c.shortestSpan() << RST << std::endl;
-		std::cout << "Shortest span c: " <<c.longestSpan() << RST << std::endl;
-		std::cout << "\t" << c << std::endl;
+		std::cout << PRL << "Another test: " << RST << std::endl;
+		MutantStack<int>::reverse_iterator rit = mstack.rbegin();
+		MutantStack<int>::reverse_iterator rite = mstack.rend();
+				std::cout << "\t" << "Printing all:" << std::endl;
+		while (rit != rite)
+		{
+			std::cout << "\t" << *rit << std::endl;
+		++rit;
+		}
 	}
-	catch(const std::exception& e)
-	{
-		std::cout << YLL << "Exception detected: " << RST << std::endl;
-		std::cerr << RED << "\t" << e.what() << RST << '\n';
-	}
-	try
-	{
-		std::cout << PRL << "Test incorrect initialisation" << RST << std::endl;
-		Span test = Span((2147483648));
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << YLL << "Exception detected: " << RST << std::endl;
-		std::cerr << RED << "\t" << e.what() << RST <<  '\n';
-	}
-
-	return (0);
+	return 0;
 }
+

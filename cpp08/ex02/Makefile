@@ -1,6 +1,6 @@
 #################	TARGET & FLAGS	##################################
 
-TARGET = Span
+TARGET = MutantStack
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -g
@@ -11,7 +11,7 @@ OBJDIR = obj
 INCLUDE = include
 #################	SOURCES			##################################
 
-SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Span.cpp
+SRC = $(SRCDIR)/main.cpp
 
 #################	OBJECTS			##################################
 
