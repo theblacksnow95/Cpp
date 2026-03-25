@@ -24,7 +24,7 @@
  * by using ::container_type then we access the iterator
  * we nneed to use ::iterator, ::const_iterator, etc
  *
- * to
+ *
 */
 template <typename T>
 class MutantStack: public std::stack<T>
