@@ -1,20 +1,21 @@
-#ifndef BitcoinExchange_HPP
-#define BitcoinExchange_HPP
+#ifndef BITCOINEXCHANGE_HPP
+#define BITCOINEXCHANGE_HPP
 
 # include "colors.hpp"
 # include <iostream>
 # include <string>
+# include <map>
 
-class element
+class BitcoinExchange
 {
 	private:
-		attribute type	_att_name;
+		std::string	val;
 
 	public:
-		element();
-		element(const element& other);
-		element&	operator=(const element& other);
-		~element();
+		BitcoinExchange();
+		BitcoinExchange(const BitcoinExchange& other);
+		BitcoinExchange&	operator=(const BitcoinExchange& other);
+		~BitcoinExchange();
 };
 
 
