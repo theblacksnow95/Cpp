@@ -11,7 +11,7 @@ OBJDIR = obj
 INCLUDE = include
 #################	SOURCES			##################################
 
-SRC = $(SRCDIR)/main.cpp $(SRCDIR)/Span.cpp
+SRC = $(SRCDIR)/main.cpp $(SRCDIR)/BitcoinExchange.cpp
 
 #################	OBJECTS			##################################
 

@@ -3,19 +3,24 @@
 
 # include "colors.hpp"
 # include <iostream>
+# include <fstream>
 # include <string>
+# include <cstring>
+# include <cstdlib>
 # include <map>
 
 class BitcoinExchange
 {
 	private:
-		std::string	val;
+		std::map<std::string, float> _map;
 
 	public:
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange& other);
 		BitcoinExchange&	operator=(const BitcoinExchange& other);
 		~BitcoinExchange();
+
+		int	fillMap(std::string dataFile);
 };
 
 
