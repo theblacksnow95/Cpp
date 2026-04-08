@@ -7,6 +7,7 @@
 # include <string>
 # include <cstring>
 # include <cstdlib>
+# include <iomanip>
 # include <map>
 
 class BitcoinExchange
