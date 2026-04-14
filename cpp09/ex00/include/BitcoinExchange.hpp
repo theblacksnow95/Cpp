@@ -8,20 +8,22 @@
 # include <cstring>
 # include <cstdlib>
 # include <iomanip>
+# include <algorithm>
 # include <map>
 
 class BitcoinExchange
 {
 	private:
 		std::map<std::string, float> _map;
-
 	public:
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange& other);
 		BitcoinExchange&	operator=(const BitcoinExchange& other);
 		~BitcoinExchange();
 
-		int	fillMap(std::string dataFile);
+		void	fillMap();
+		void	parseInput(std::string inputFile);
+		void	findExchange(std::string str);
 };
 
 
