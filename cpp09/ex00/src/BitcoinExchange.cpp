@@ -2,7 +2,7 @@
 
 BitcoinExchange::BitcoinExchange()
 {
-	std::cout << "BitcoinExchange Default constructor called" << std::endl;
+	fillMap();
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
@@ -24,7 +24,6 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other)
 
 BitcoinExchange::~BitcoinExchange()
 {
-	std::cout << "BitcoinExchange Destructor called." << std::endl;
 }
 
 
@@ -32,37 +31,62 @@ bool	check_date(std::string str)
 {
 	std::string res;
 	std::stringstream ss;
-	unsigned int val;
 	unsigned int year;
 	unsigned int month;
 	unsigned int day;
+	unsigned int maxday;
 	int	pos = str.find('-');
-	int pos2 = str.find('-', pos);
+	int pos2 = str.rfind('-');
+	if (str.find_first_not_of("1234567890-") != str.npos)
+	{
+		std::cout << RED << "Error: incorrect date ==> " << str << RST << std::endl;
+		return (false);
+	}
 	ss << str.substr(0, pos);
 	ss >> year;
-	if (year <= 2000 || year >= 2030)
+	if (year < 2009 || year >= 2030)
+	{
+		std::cout << YLL << "Error: incorrect date ==> " << str << RST << std::endl;
 		return (false);
+	}
+	ss.clear();
 	ss << str.substr(pos + 1, 2);
 	ss >> month;
-	if (month < 1 || month > 12)
-		return (false);
-	ss << str.substr(pos2);
+	if (month == 2)
+		maxday = 29;
+	else if (month == 4 || month == 6 || month == 8 || month == 11)
+		maxday = 30;
+	else
+		maxday = 31;
+	ss.clear();
+	ss << str.substr(pos2 + 1);
 	ss >> day;
-	if (day < 1 || day > 31)
+	if (month < 1 || month > 12 || day < 1 || day > 31 || day > maxday)
+	{
+		std::cout << YLL << "Error: incorrect date " << day << " " << month << " " << year << " " << ss.str() << RST << std::endl;
 		return (false);
+	}
 	return true;
 }
 
 bool	basicCheck(std::string line)
 {
-	if (line.find_first_not_of("1234567890|- ") == line.npos)
+	std::string s1(line.substr(0, line.find('|')));
+	std::string s2(line.substr(line.find('|') + 1) );
+	int neg = s2.find('-');
+	if (s1.find_first_not_of("1234567890- ") != line.npos || line.find_first_not_of("1234567890-.| ") != line.npos)
 	{
 		std::cout << RED << "Error: incorrect line input ==> " << line << RST << std::endl;
 		return (false);
 	}
-	if (std::count(line.begin(),line.end(), ' ') != 2)
-	{	
-		std::cout << RED << "Error: bad input, spaces ==> " << line << RST << std::endl;
+	if (s2[0] != ' ' || s2.find('.') != s2.rfind('.') )
+	{
+		std::cout << RED << "Error: incorrect line input ==> " << line << RST << std::endl;
+		return (false);
+	}
+	if ( (neg != 1 && neg !=-1 && neg != 14) || s2.find('-') != s2.rfind('-'))
+	{
+		std::cout << RED << "Error: incorrect line input ==> " << line << " " << RST << std::endl;
 		return (false);
 	}
 	if (line.size() < 14)
@@ -70,45 +94,44 @@ bool	basicCheck(std::string line)
 		std::cout << RED << "Error: bad input, line too short ==> " << line << RST << std::endl;
 		return (false);
 	}
+	if (std::count(line.begin(),line.end(), ' ') != 2)
+	{	
+		std::cout << RED << "Error: bad input, spaces ==> " << line << RST << std::endl;
+		return (false);
+	}
+	return (true);
 }
 
 bool valueCheck(std::string str)
 {
-	std::stringstream ss;
-	unsigned int val;
-	ss << str;
+	std::stringstream ss(str);
+	double val;
 	ss >> val;
-	if (val < 1 || val > 1000)
+	if (val < 0 || val > 1000)
 	{	
 		if (val < 1)
-			std::cout << RED << "Error: negative number" << str << RST << std::endl;
+			std::cout << RED << "Error: negative number ==> " << str << RST << std::endl;
 		if (val > 1000)
-			std::cout << RED << "Error: not a positive number"<< str << RST << std::endl;
+			std::cout << RED << "Error: out of bounds, too big ==> "<< str  << RST << std::endl;
 		return (false);
 	}
+	return (true);
 }
 
 void	BitcoinExchange::findExchange(std::string str)
 {
 	std::string date(str.substr(0, 10));
 	std::stringstream ss(str.substr(str.find('|') + 1));
-	unsigned int	val;
+	double	val;
 	ss >> val;
 	std::map<std::string, float>::iterator it = _map.find(date);
-	while (it == _map.end())
-	{
-		int day;
-		int pos = date.find('-') + 1;
-		ss << date.substr(pos, 2);
-		ss >> day;
-		if (day > 0 && day <= 31)
-		{
-			day--;
-			ss << day;
-			date.replace(pos, 2, ss.str());
-		}
+	if (it == _map.end()){
+		it = _map.lower_bound(date);
+		it--;
+		std::cout << GRN << std::fixed << std::setprecision(2) << date << " => " << val << " = " << val * it->second << RST << std::endl;
 	}
-	
+	else
+		std::cout << GRN << std::fixed << std::setprecision(2) << date << " => " << val << " = " << val * it->second << RST << std::endl;
 }
 
 void	BitcoinExchange::parseInput(std::string inputFile)
@@ -118,24 +141,24 @@ void	BitcoinExchange::parseInput(std::string inputFile)
 	inFile.open(inputFile.c_str());
 	if (!inFile) 
 	{
+		
 		std::cout << YLL << "Error: cannot open file, file may lack permissions or may not exist." << RST << std::endl;
 		return ;
 	}
 	getline(inFile, line);
+	if (line.empty())
+	{
+		std::cout << RED << "Error: empty file" << RST << std::endl;
+		return ;
+	}
 	while (getline(inFile, line))
 	{
 		std::string date(line.substr(0, line.find(' ')));
 		std::string value(line.substr(line.find('|') + 1));
-		if (!basicCheck(line) || !check_date(date) || ! valueCheck(value))
-		{
-			std::cout << RED << "incorrect line" << RST << std::endl;
-			break;
-		}
+		if (!basicCheck(line) || !check_date(date) || !valueCheck(value))
+			continue ;
 		else
-		{
 			findExchange(line);
-		}
-
 	}
 }
 
@@ -155,12 +178,6 @@ void	BitcoinExchange::fillMap()
 		date = line.substr(0, pos);
 		value = line.substr(pos + 1);
 		_map[date] = atof(value.c_str());
-	}
-	int j = 0;
-	for (std::map<std::string, float>::iterator it = _map.begin(); it != _map.end(); it++)
-	{
-		std::cout <<  std::fixed << std::setprecision(2) << GRN << "map->date:\t" << it->first << "\t\tvalue->:\t" << it->second << RST << std::endl;
-		j++;
 	}
 	std::cout << GRN << "Data filled correctly from data.csv" << RST << std::endl;
 }

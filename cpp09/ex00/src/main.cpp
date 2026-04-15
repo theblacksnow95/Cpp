@@ -6,9 +6,7 @@ int	main(int ac, char** av)
 
 	BitcoinExchange btc;
 
-	(void)av;
-
-	btc.fillMap();
+	btc.parseInput(av[1]);
 	
 	return (0);
 }
