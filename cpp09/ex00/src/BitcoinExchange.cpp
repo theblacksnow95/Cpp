@@ -204,17 +204,3 @@ void	BitcoinExchange::fillMap()
 	}
 	std::cout << GRN << "Data filled correctly from data.csv" << RST << std::endl;
 }
-
-
-
-// int main() 
-// {
-// 	std::ifstream file("file.txt");
-// 	std::stringstream buffer;
-// 	buffer << file.rdbuf();
-// 	std::string content = buffer.str();
-// 	if (content.empty()) std::cout << "File is empty";
-// 	else if (all_spaces(content)) std::cout << "File is blank";
-// 	else std::cout << "File has content";
-// 	return 0;
-// }
