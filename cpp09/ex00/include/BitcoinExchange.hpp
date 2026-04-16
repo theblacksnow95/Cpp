@@ -12,6 +12,8 @@
 # include <algorithm>
 # include <map>
 
+# define HEADER "date | value"
+
 class BitcoinExchange
 {
 	private:

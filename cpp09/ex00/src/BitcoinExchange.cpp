@@ -5,15 +5,13 @@ BitcoinExchange::BitcoinExchange()
 	fillMap();
 }
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
+BitcoinExchange::BitcoinExchange(const BitcoinExchange& other): _map(other._map)
 {
-	_map = other._map;
 	std::cout << "BitcoinExchange Copy constructor called" << std::endl;
 }
 
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other)
 {
-	
 	if (this != &other)
 	{
 		_map = other._map;
@@ -63,7 +61,7 @@ bool	check_date(std::string str)
 	ss >> day;
 	if (month < 1 || month > 12 || day < 1 || day > 31 || day > maxday)
 	{
-		std::cout << YLL << "Error: incorrect date " << day << " " << month << " " << year << " " << ss.str() << RST << std::endl;
+		std::cout << RED << "Error: incorrect date ==> " << str << RST << std::endl;
 		return (false);
 	}
 	return true;
@@ -74,6 +72,9 @@ bool	basicCheck(std::string line)
 	std::string s1(line.substr(0, line.find('|')));
 	std::string s2(line.substr(line.find('|') + 1) );
 	int neg = s2.find('-');
+	if (line.empty()){
+		std::cout << RED << "Error: empty line" << RST << std::endl;
+		return (false);}
 	if (s1.find_first_not_of("1234567890- ") != line.npos || line.find_first_not_of("1234567890-.| ") != line.npos)
 	{
 		std::cout << RED << "Error: incorrect line input ==> " << line << RST << std::endl;
@@ -91,12 +92,12 @@ bool	basicCheck(std::string line)
 	}
 	if (line.size() < 14)
 	{
-		std::cout << RED << "Error: bad input, line too short ==> " << line << RST << std::endl;
+		std::cout << RED << "Error: bad input ==> " << line << RST << std::endl;
 		return (false);
 	}
 	if (std::count(line.begin(),line.end(), ' ') != 2)
 	{	
-		std::cout << RED << "Error: bad input, spaces ==> " << line << RST << std::endl;
+		std::cout << RED << "Error: bad input ==> " << line << RST << std::endl;
 		return (false);
 	}
 	return (true);
@@ -134,6 +135,30 @@ void	BitcoinExchange::findExchange(std::string str)
 		std::cout << GRN << std::fixed << std::setprecision(2) << date << " => " << val << " = " << val * it->second << RST << std::endl;
 }
 
+bool allSpaces(std::string str)
+{
+	for (size_t i= 0; i < str.size();i++) 
+		if (!isspace(str[i])) 
+			return false;
+	return true;
+}
+
+bool	checkEmptyfile(std::string input)
+{
+	std::ifstream inFile(input.c_str());
+	std::stringstream buf;
+	buf << inFile.rdbuf();
+	std::string content(buf.str());
+	if (content.empty()){
+		std::cout << RED << "Error: empty file" << RST << std::endl;
+		return (true);}
+	if (allSpaces(content)){
+		std::cout << RED << "Error: empty file" << RST << std::endl;
+		return (true);}
+	return (false);
+}
+
+
 void	BitcoinExchange::parseInput(std::string inputFile)
 {
 	std::ifstream	inFile;
@@ -141,16 +166,15 @@ void	BitcoinExchange::parseInput(std::string inputFile)
 	inFile.open(inputFile.c_str());
 	if (!inFile) 
 	{
-		
 		std::cout << YLL << "Error: cannot open file, file may lack permissions or may not exist." << RST << std::endl;
 		return ;
 	}
-	getline(inFile, line);
-	if (line.empty())
-	{
-		std::cout << RED << "Error: empty file" << RST << std::endl;
+	if (checkEmptyfile(inputFile))
 		return ;
-	}
+	getline(inFile, line);
+	if (line != HEADER){
+		std::cout << RED << "Error: wrong or missing header" << RST << std::endl;
+		return ;}
 	while (getline(inFile, line))
 	{
 		std::string date(line.substr(0, line.find(' ')));
@@ -181,3 +205,17 @@ void	BitcoinExchange::fillMap()
 	}
 	std::cout << GRN << "Data filled correctly from data.csv" << RST << std::endl;
 }
+
+
+
+// int main() 
+// {
+// 	std::ifstream file("file.txt");
+// 	std::stringstream buffer;
+// 	buffer << file.rdbuf();
+// 	std::string content = buffer.str();
+// 	if (content.empty()) std::cout << "File is empty";
+// 	else if (all_spaces(content)) std::cout << "File is blank";
+// 	else std::cout << "File has content";
+// 	return 0;
+// }
