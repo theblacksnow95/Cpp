@@ -105,7 +105,7 @@ void	RPN::fillStack(const std::string& str)
 		}
 	}
 	if (_stack.size() != 1 ){
-		std::cerr << RED << "Error: incomplete" << RST << std::endl;
+		std::cerr << RED << "Error: Invalid args" << RST << std::endl;
 		return ;
 	}
 	std::cerr << GRN << "Result: " << _stack.top() << RST << std::endl;
