@@ -158,7 +158,6 @@ bool	checkEmptyfile(std::string input)
 	return (false);
 }
 
-
 void	BitcoinExchange::parseInput(std::string inputFile)
 {
 	std::ifstream	inFile;
