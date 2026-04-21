@@ -1,0 +1,44 @@
+Merge insertion. A pleasant generalization of the method above has beendiscovered by Lester Ford, Jr. and Selmer Johnson. 
+Since it involves some aspects of merging and some aspects of insertion, we shall call it merge insertion. 
+For example, consider the problem of sorting 21 elements. 
+We start by comparing the ten pairs K 1 : K 2, K3: K4, ... , K19: K2o; then we sort the ten larger elements of the pairs, using merge insertion.
+As a result we obtain the configuration bi b2 b3 b4 b5 b5 b7 bs bg b10 bn analogous to (5)· The next step is to insert b3 among {b1, a1, a2}, then b2 among the other elements less than a2; 
+we arrive at the configuration C3 C4 C5 >• 7 7 7 7 7 7 7.>• >• >• (8)b4 b5 b5 b7 bs bg bio bn Let us call the upper-line elements the main chain. 
+We can insert b5 into its proper place in the main chain, using three comparisons (first comparing it toc4, then c2 or c6 , etc.); 
+then b4 can be moved into the main chain in three more steps, leading to di d2 d3 d4 d5 d5 d7 ds dg dio a5 a7 as ag aio • >• >• >• >• >• >• >• >• >• 7 7 7 7 7 • (g) b5 b7 bs bg bio bn
+The next step is crucial; is it clear what to do? We insert bu (not b7 ) into the main chain, using only four comparisons. 
+Then b 10 , b9 , b8 , b7 , b6 (in this order) can also be inserted into their proper places in the main chain, using at most four comparisons each. 
+A careful count of the comparisons involved here shows that the 21 elements have been sorted in at most 10+ S(lO) + 2 + 2 + 3 + 3 +4+ 4+4 +4+ 4+4 = 66 5.3.1 
+MINIMUM-COMPARISON SORTING 185 steps. 
+Since 265 < 21! < 266' we also know that no fewer than 66 would be possible in any event; hence S(21) = 66. 
+(io)(Binary insertion would have required 74 comparisons.) In general, merge insertion proceeds as follows for n elements: i) Make pairwise comparisons of l n / 2J disjoint pairs of elements. 
+(If n is odd, leave one element out.)ii) Sort the ln/2J larger numbers, found in step (i), by merge insertion. iii) Name the elements a1, a2, ... , aln/2J, b1, b2, ... , bln/21 as in (1), where a1 < a2 ::::; · · · ::::; aln/ 2J and bi ::::; ai for 1 ::::; i ::::; l n/2 J; 
+call b1 and the a's the "main chain." 
+Insert the remaining b's into the main chain, using binaryinsertion, in the following order, leaving out all bj for j > rn/21: 
+
+
+vector<int> fordJohnsonOrder(int m) {
+    vector<int> J = {1, 1};
+    while (true) {
+        int next = J.back() + 2 * J[J.size() - 2];
+        if (next > m) break;
+        J.push_back(next);
+    }
+
+    vector<int> order;
+    int prev = 1;
+
+    for (int j : J) {
+        if (j <= 1) continue;
+
+        for (int k = j; k > prev; --k)
+            order.push_back(k);
+
+        prev = j;
+    }
+
+    for (int k = m; k > prev; --k)
+        order.push_back(k);
+
+    return order;
+}
