@@ -73,7 +73,7 @@ void	RPN::fillStack(const std::string& str)
 			
 			_stack.push(str[i] - '0');
 		}
-		else  if (str[i] != ' ') {
+		else if (str[i] != ' ') {
 			if (_stack.size() < 2){
 				std::cerr << RED << "Error: invalid args" << RST << std::endl;
 				return ;

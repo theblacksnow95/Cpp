@@ -7,11 +7,13 @@
 # include <string>
 # include <vector>
 # include <cstdlib>
+# include <climits>
 
 class PmergeMe
 {
 	private:
-		std::vector<std::pair<int, int> > _v1;
+		std::vector<int> _v1;
+		std::vector<std::vector<int>::iterator> its;
 		void	fillVector(int *arr);
 	public:
 		PmergeMe();
