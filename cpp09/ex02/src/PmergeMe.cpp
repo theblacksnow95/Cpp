@@ -106,8 +106,13 @@ void	PmergeMe::sortvect(char** args, int size)
 	std::cout << YLL << "Size: " << size << RST << std::endl;
 }
 
-
 void	PmergeMe::_createSequenceJB()
 {
-	for (size_t i = 0; i < _v1.size(); i++)
+	int	size = _v1.size() / 2;
+	_seqJcb[0] = 0;
+	_seqJcb[1] = 1;
+	for (size_t i = 2; i < _v1.size(); i++) {
+		size_t val = i + 2 * (i - 2);
+		_seqJcb.push_back(i + 2 * (i - 2));
+	}
 }
