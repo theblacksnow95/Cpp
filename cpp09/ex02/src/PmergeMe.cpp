@@ -47,17 +47,48 @@ void	printVector(std::vector<int > vect)
 	}
 }
 
-void	sortBigVect(std::vector<int>& vct)
+void	printlists(std::vector<int> vect)
 {
-	for (std::vector<int>::iterator it  = vct.begin(); it < vct.end(); it+=2) {
+	for (size_t i = 0; i < vect.size(); i++)
+	{
+		std::cout << YLL <<  vect[i] << " " << RST;
+	}
+	std::cout << std::endl;
+}
+
+void	PmergeMe::_swapFill(std::vector<int>& a, std::vector<int>& b, std::vector<int>& vct)
+{
+	for (std::vector<int>::iterator it = vct.begin(); it + 1 != vct.end() && it != vct.end(); it+=2) {
+		if (*it > *(it + 1)) {
+			a.push_back(*it);
+			b.push_back(*(it + 1));
+		}
+		else {
+			a.push_back(*(it + 1));
+			b.push_back(*it);
+		}
 		if (it + 1 == vct.end())
 			break;
-		if (*it > *(it + 1))
-			std::iter_swap(it + 1, it);
+	}
+	if (vct.size() % 2 != 0) {
+		b.push_back(vct.back());
 	}
 }
 
-void	PmergeMe::sortof(char** args, int size)
+std::vector<int>	PmergeMe::_mergeSort(std::vector<int>& vect)
+{
+	if (vect.size() <= 1)
+		return vect;
+	std::vector<int> a, b, copy_vect(vect);
+	_swapFill(a, b, copy_vect);
+	a = _mergeSort(a);
+	printlists(a);
+	printlists(b);
+	
+	return a;
+}
+
+void	PmergeMe::sortvect(char** args, int size)
 {
 	for (int i = 1; i < size; i++) {
 		if (!checkDigits(args[i])) {
@@ -69,7 +100,14 @@ void	PmergeMe::sortof(char** args, int size)
 		_v1.push_back(std::strtod(args[i], NULL));
 		// std::cout << YLL << "num: " << _v1[i] << RST << std::endl;
 	}
-	sortBigVect(_v1);
+	// sortBigVect(_v1);
 	printVector(_v1);
+	_mergeSort(_v1);
 	std::cout << YLL << "Size: " << size << RST << std::endl;
+}
+
+
+void	PmergeMe::_createSequenceJB()
+{
+	for (size_t i = 0; i < _v1.size(); i++)
 }

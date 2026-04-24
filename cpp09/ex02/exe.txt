@@ -42,3 +42,88 @@ vector<int> fordJohnsonOrder(int m) {
 
     return order;
 }
+
+
+std::vector<int> PmergeMe::mergeSort(std::vector<int> vect)
+{
+    if (vect.size() <= 1)
+        return vect;
+
+    std::vector<int> a;
+    std::vector<int> b;
+
+    swapFill(a, b, vect);
+
+    // ordenar recursivamente
+    a = mergeSort(a);
+
+    // insertar b en a
+    insertB(a, b);
+
+    return a;
+}
+
+
+void insertB(std::vector<int>& a, std::vector<int>& b)
+{
+    if (b.empty())
+        return;
+
+    // insertar el primero
+    a.insert(a.begin(), b[0]);
+
+    std::vector<size_t> order = jacobsthalOrder(b.size());
+
+    for (size_t k = 1; k < b.size(); k++)
+    {
+        int value = b[k];
+
+        // búsqueda binaria
+        std::vector<int>::iterator pos =
+            std::lower_bound(a.begin(), a.end(), value);
+
+        a.insert(pos, value);
+    }
+}
+
+
+std::vector<size_t> jacobsthalOrder(size_t n)
+{
+    std::vector<size_t> jacob;
+    jacob.push_back(1);
+    jacob.push_back(3);
+
+    while (jacob.back() < n)
+    {
+        size_t next = jacob[jacob.size() - 1] + 2 * jacob[jacob.size() - 2];
+        jacob.push_back(next);
+    }
+
+    return jacob;
+}
+
+
+
+mainChain.insert(mainChain.begin(), b[0]);
+
+
+void PmergeMe::swapFill(std::vector<int>& a, std::vector<int>& b, const std::vector<int>& vct)
+{
+    for (size_t i = 0; i + 1 < vct.size(); i += 2)
+    {
+        if (vct[i] > vct[i + 1])
+        {
+            a.push_back(vct[i]);
+            b.push_back(vct[i + 1]);
+        }
+        else
+        {
+            a.push_back(vct[i + 1]);
+            b.push_back(vct[i]);
+        }
+    }
+
+    // elemento impar
+    if (vct.size() % 2)
+        b.push_back(vct.back());
+}

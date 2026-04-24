@@ -12,15 +12,18 @@
 class PmergeMe
 {
 	private:
-		std::vector<int> _v1;
-		std::vector<std::vector<int>::iterator> its;
-		void	fillVector(int *arr);
+		std::vector<int>						_v1;
+		void									_fillVector(int *arr);
+		void									_swapFill(std::vector<int>& a, std::vector<int>& b, std::vector<int>& vct);
+		std::vector<int>						_mergeSort(std::vector<int>& vect);
+		std::vector<size_t >						_seqJcb;
+		void									_createSequenceJB();
 	public:
 		PmergeMe();
 		PmergeMe(const PmergeMe& other);
 		PmergeMe&	operator=(const PmergeMe& other);
 		~PmergeMe();
-		void	sortof(char** args, int size);
+		void	sortvect(char** args, int size);
 };
 
 #endif
