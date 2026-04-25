@@ -1,7 +1,25 @@
 #include "PmergeMe.hpp"
 
+bool	checkDigits(char *str);
+
 PmergeMe::PmergeMe()
 {
+}
+
+PmergeMe::PmergeMe(int ac, char** av)
+{
+	std::cout << GRN << "Size of sequence ==> " << ac << RST << std::endl;
+	for (int i = 1; i < ac; i++) {
+		if (!checkDigits(av[i])) {
+			std::cout << RED << "Error: incorrect arguments " << RST << std::endl;
+			return ;
+		}
+	}
+	for (int i = 0; i < ac; i++) {
+		_v1.push_back(std::strtod(av[i], NULL));
+		// std::cout << YLL << "num: " << _v1[i] << RST << std::endl;
+	}
+	_createSequenceJB();
 }
 
 PmergeMe::PmergeMe(const PmergeMe& other): _v1(other._v1)
@@ -82,37 +100,62 @@ std::vector<int>	PmergeMe::_mergeSort(std::vector<int>& vect)
 	std::vector<int> a, b, copy_vect(vect);
 	_swapFill(a, b, copy_vect);
 	a = _mergeSort(a);
-	printlists(a);
-	printlists(b);
+	// printlists(a);
+	// printlists(b);
 	
 	return a;
 }
 
-void	PmergeMe::sortvect(char** args, int size)
+void	PmergeMe::sortvect()
 {
-	for (int i = 1; i < size; i++) {
-		if (!checkDigits(args[i])) {
-			std::cout << RED << "Error: incorrect arguments " << RST << std::endl;
-			return ;
+	// printVector(_v1);
+	_mergeSort(_v1);
+}
+
+void	addIndex(std::vector<size_t>& vct)
+{
+	size_t count = 0;
+	for (size_t i = 1; i < vct.size() ; ++i)
+	{
+		size_t prev = vct[i  - 1];
+		if (count > 1)
+			prev = vct[i - count];
+		size_t curr = vct[i];
+		size_t diff = curr - prev;
+		if (prev > curr)
+			diff = 0;
+		std::cout << YLL << "Values prev, curr: " << prev << ", " << curr << " diff ==> "<< diff<< RST << std::endl;
+		if (diff > 1) {
+			size_t inter = curr - 1;
+			std::cout << YLL << "Number = " << inter << RST << std::endl;
+			while (inter > prev)
+			{
+				vct.insert(vct.begin() + i + 1, inter);
+				std::cout << BLE << "\tval inserted " << inter << RST << std::endl;
+				inter--;
+				i++;
+				count++;
+			}
 		}
 	}
-	for (int i = 0; i < size; i++) {
-		_v1.push_back(std::strtod(args[i], NULL));
-		// std::cout << YLL << "num: " << _v1[i] << RST << std::endl;
-	}
-	// sortBigVect(_v1);
-	printVector(_v1);
-	_mergeSort(_v1);
-	std::cout << YLL << "Size: " << size << RST << std::endl;
 }
 
 void	PmergeMe::_createSequenceJB()
 {
-	int	size = _v1.size() / 2;
-	_seqJcb[0] = 0;
-	_seqJcb[1] = 1;
+	size_t	size = (_v1.size());
+	_seqJcb.push_back(0);
+	_seqJcb.push_back(1);
 	for (size_t i = 2; i < _v1.size(); i++) {
-		size_t val = i + 2 * (i - 2);
-		_seqJcb.push_back(i + 2 * (i - 2));
+		size_t val = _seqJcb[i - 1] + 2 * _seqJcb[i - 2];
+		if (val > size)
+			break;
+		_seqJcb.push_back(val);
+		std::cout << GRN << "value pushed sequence: " << val << RST << std::endl;
 	}
+	std::cout << GRN << "Jacobsthal sequence complete: " << RST << std::endl;
+	addIndex(_seqJcb);
+	for (size_t i = 0; i < _seqJcb.size(); i++) {
+		std::cout << YLL << _seqJcb[i] << " " << RST;
+	}
+	std::cout << std::endl;
 }

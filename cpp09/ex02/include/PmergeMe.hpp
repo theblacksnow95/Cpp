@@ -20,10 +20,11 @@ class PmergeMe
 		void									_createSequenceJB();
 	public:
 		PmergeMe();
+		PmergeMe(int ac, char** av);
 		PmergeMe(const PmergeMe& other);
 		PmergeMe&	operator=(const PmergeMe& other);
 		~PmergeMe();
-		void	sortvect(char** args, int size);
+		void	sortvect();
 };
 
 #endif
