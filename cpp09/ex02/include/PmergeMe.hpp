@@ -8,17 +8,21 @@
 # include <vector>
 # include <cstdlib>
 # include <climits>
+# include <algorithm>
 
 class PmergeMe
 {
 	private:
 		std::vector<int>						_v1;
+		std::vector<size_t >					_seqJcb;
 		void									_fillVector(int *arr);
 		void									_swapFill(std::vector<int>& a, std::vector<int>& b, std::vector<int>& vct);
 		std::vector<int>						_mergeSort(std::vector<int>& vect);
-		std::vector<size_t >						_seqJcb;
+		std::vector<size_t>						_createJCB(size_t n);
 		void									_createSequenceJB();
-	public:
+		void									addIndex(std::vector<size_t>& vct);
+		void									_insertPend(std::vector<int>& main, std::vector<int>& pend, std::vector<size_t> order, std::vector<int> copy_a);
+		public:
 		PmergeMe();
 		PmergeMe(int ac, char** av);
 		PmergeMe(const PmergeMe& other);
