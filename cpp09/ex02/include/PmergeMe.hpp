@@ -6,6 +6,7 @@
 # include <utility>
 # include <string>
 # include <vector>
+# include <deque>
 # include <cstdlib>
 # include <climits>
 # include <algorithm>
@@ -13,15 +14,18 @@
 class PmergeMe
 {
 	private:
+		template <typename T>
+		void									_swapFill(T& a, T& b, T& vct);
+		template <typename T>
+		T										_mergeSort(T& vect);
+		template <typename T>
+		void									_insertPend(T& main, T& pend, std::vector<size_t> order, T copy_a);
 		std::vector<int>						_v1;
 		std::vector<size_t >					_seqJcb;
 		void									_fillVector(int *arr);
-		void									_swapFill(std::vector<int>& a, std::vector<int>& b, std::vector<int>& vct);
-		std::vector<int>						_mergeSort(std::vector<int>& vect);
 		std::vector<size_t>						_createJCB(size_t n);
 		void									_createSequenceJB();
 		void									addIndex(std::vector<size_t>& vct);
-		void									_insertPend(std::vector<int>& main, std::vector<int>& pend, std::vector<size_t> order, std::vector<int> copy_a);
 		public:
 		PmergeMe();
 		PmergeMe(int ac, char** av);
@@ -29,6 +33,7 @@ class PmergeMe
 		PmergeMe&	operator=(const PmergeMe& other);
 		~PmergeMe();
 		void	sortvect();
+		void	sortdeque();
 };
 
 #endif

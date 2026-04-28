@@ -8,7 +8,7 @@ PmergeMe::PmergeMe()
 
 PmergeMe::PmergeMe(int ac, char** av)
 {
-	std::cout << GRN << "Size of sequence ==> " << ac << RST << std::endl;
+	//std::cout << GRN << "Size of sequence ==> " << ac << RST << std::endl;
 	for (int i = 1; i < ac; i++) {
 		if (!checkDigits(av[i])) {
 			std::cout << RED << "Error: incorrect arguments " << RST << std::endl;
@@ -28,7 +28,7 @@ PmergeMe::PmergeMe(const PmergeMe& other): _v1(other._v1)
 
 PmergeMe& PmergeMe::operator=(const PmergeMe& other)
 {
-	
+
 	if (this != &other)
 	{
 		_v1 = other._v1;
@@ -39,7 +39,7 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& other)
 
 PmergeMe::~PmergeMe()
 {
-	std::cout << "PmergeMe Destructor called." << std::endl;
+	//std::cout << "PmergeMe Destructor called." << std::endl;
 }
 
 bool	checkDigits(char *str)
@@ -47,7 +47,7 @@ bool	checkDigits(char *str)
 	std::string num(str);
 	if (num.find_first_not_of("01234556789 ") != num.npos)
 		return (false);
-	if (std::strtod(str, NULL) > INT_MAX || std::strtod(str , NULL) < 0)
+	if (std::strtod(str, NULL) > __INT_MAX__ || std::strtod(str , NULL) < 0)
 		return (false);
 	return (true);
 }
@@ -67,17 +67,19 @@ void	printVector(T vect)
 template <typename T>
 void	printlists(T vect)
 {
-	
-	for (typename T::iterator it = vect.begin(); it < vect.end(); it++)
+
+	for (typename T::iterator it = vect.begin(); it != vect.end(); ++it)
 	{
-		std::cout << YLL << *it << " " << RST;
+		std::cout << *it;
+		if (it + 1 != vect.end())
+			std::cout << " ";
 	}
 	std::cout << std::endl;
 }
-
-void	PmergeMe::_swapFill(std::vector<int>& a, std::vector<int>& b, std::vector<int>& vct)
+template <typename T>
+void	PmergeMe::_swapFill(T& a, T& b, T& vct)
 {
-	for (std::vector<int>::iterator it = vct.begin(); it + 1 != vct.end() && it != vct.end(); it+=2) {
+	for (typename T::iterator it = vct.begin(); it + 1 != vct.end() && it != vct.end(); it+=2) {
 		if (*it > *(it + 1)) {
 			a.push_back(*it);
 			b.push_back(*(it + 1));
@@ -93,37 +95,42 @@ void	PmergeMe::_swapFill(std::vector<int>& a, std::vector<int>& b, std::vector<i
 		b.push_back(vct.back());
 	}
 }
-
-void	PmergeMe::_insertPend(std::vector<int>& main, std::vector<int>& pend, std::vector<size_t> order, std::vector<int> copy_a)
+template <typename T>
+void	PmergeMe::_insertPend(T& main, T& pend, std::vector<size_t> order, T copy_a)
 {
 	for (size_t i = 0; i < order.size(); ++i) {
 		size_t idx = order[i];
 		if (idx >= pend.size())
 			continue;
 		int value = pend[idx];
-		size_t real_id = idx;
-		if (real_id < copy_a.size())
-			real_id = copy_a[idx];
-		else
-			real_id = __INT_MAX__;
-		std::vector<int>::iterator bound = std::find(main.begin(), main.end(), real_id);
-
+		typename T::iterator bound = main.end();
+		if (idx < copy_a.size())
+		{
+			int anchor = copy_a[idx];
+			for (typename T::iterator it = main.begin(); it < main.end(); ++it) {
+				if (*it == anchor){
+					bound = it;
+					break;
+				}
+			}
+		}
 		if (bound == main.end())
 			bound = main.end();
-		
-		std::vector<int>::iterator pos = std::upper_bound(main.begin(), bound, value);
+
+		typename T::iterator pos = std::upper_bound(main.begin(), bound, value);
+		//std::cout << RED << "Valor insertado ==>" << value << RST << std::endl;
 		main.insert(pos, value);
 	}
 }
-
-std::vector<int>	PmergeMe::_mergeSort(std::vector<int>& vect)
+template <typename T>
+T	PmergeMe::_mergeSort(T& sec)
 {
-	if (vect.size() <= 1)
-		return vect;
-	std::vector<int> a, b, copy_vect(vect);
+	if (sec.size() <= 1)
+		return sec;
+	T a, b, copy_vect(sec);
 	_swapFill(a, b, copy_vect);
+	T copy_a = a;
 	a = _mergeSort(a);
-	std::vector<int> copy_a = a;
 	std::vector<size_t> order = _createJCB(b.size());
 	_insertPend(a, b, order, copy_a);
 	return a;
@@ -133,13 +140,20 @@ void	PmergeMe::sortvect()
 {
 	// printVector(_v1);
 	std::vector<int> sorted = _mergeSort(_v1);
-	std::cout << BLE << "Original secuence:" << RST << std::endl;
-	printlists(_v1);
-	std::cout << YLL << "Modified list" << RST << std::endl;
 	printlists(sorted);
-	std::cout << BLE << "Comparing with sort function" << RST << std::endl;
+	//std::cout << BLE << "Comparing with sort function" << RST << std::endl;
 	std::sort(_v1.begin(), _v1.end());
 	printlists(_v1);
+}
+
+void	PmergeMe::sortdeque()
+{
+	std::deque<int> d(_v1.begin(), _v1.end());
+	std::deque<int> sorted = _mergeSort(d);
+	printlists(sorted);
+	std::sort(_v1.begin(), _v1.end());
+	printlists(_v1);
+
 }
 
 std::vector<size_t> PmergeMe::_createJCB(size_t n)
