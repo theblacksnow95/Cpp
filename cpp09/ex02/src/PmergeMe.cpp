@@ -116,7 +116,6 @@ void	PmergeMe::_insertPend(std::vector<int>& main, std::vector<int>& pend, std::
 	}
 }
 
-
 std::vector<int>	PmergeMe::_mergeSort(std::vector<int>& vect)
 {
 	if (vect.size() <= 1)
