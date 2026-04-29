@@ -8,7 +8,7 @@
 # include <vector>
 # include <deque>
 # include <cstdlib>
-# include <climits>
+# include <iomanip>
 # include <algorithm>
 # include <ctime>
 
@@ -24,7 +24,12 @@ class PmergeMe
 		std::vector<int>						_v1;
 		std::vector<int>						_check;
 		std::vector<size_t >					_seqJcb;
+		double									_timeVect;
+		double									_timeDeque;
 		std::vector<size_t>						_createJCB(size_t n);
+		void									sortvect();
+		void									sortdeque();
+		void									timeDuration();
 		// void									_fillVector(int *arr);
 		// void									_createSequenceJB();
 		// void									addIndex(std::vector<size_t>& vct);
@@ -34,8 +39,6 @@ class PmergeMe
 		PmergeMe(const PmergeMe& other);
 		PmergeMe&	operator=(const PmergeMe& other);
 		~PmergeMe();
-		void	sortvect();
-		void	sortdeque();
 };
 
 

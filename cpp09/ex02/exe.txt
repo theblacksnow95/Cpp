@@ -127,3 +127,62 @@ void PmergeMe::swapFill(std::vector<int>& a, std::vector<int>& b, const std::vec
     if (vct.size() % 2)
         b.push_back(vct.back());
 }
+
+
+
+
+// void	PmergeMe::addIndex(std::vector<size_t>& vct)
+// {
+// 	if ( vct.size() <= 2)
+// 		return ;
+// 	size_t count = 0;
+// 	for (size_t i = 1; i < vct.size() ; ++i)
+// 	{
+// 		size_t prev = vct[i - 1 - count];
+// 		size_t curr = vct[i];
+// 		size_t diff = curr - prev;
+// 		count = 0;
+// 		if (prev > curr)
+// 			diff = 0;
+// 		// std::cout << YLL << "Values prev, curr: " << prev << ", " << curr << " diff ==> "<< diff << RST << std::endl;
+// 		if (diff > 1) {
+// 			size_t inter = curr - 1;
+// 			// std::cout << GRN << "\tNumber = " << inter << RST << std::endl;
+// 			while (inter > prev)
+// 			{
+// 				vct.insert(vct.begin() + i + 1, inter);
+// 				// std::cout << BLE << "\tval inserted " << inter << RST << std::endl;
+// 				inter--;
+// 				i++;
+// 				count++;
+// 			}
+// 			// std::cout << RED << "\tcount: " << count << RST << std::endl;
+// 		}
+// 	}
+// 	size_t max = findBiggest(vct);
+// 	size_t target = _v1.size();
+// 	// std::cout << YLL << "Max:" << max << RST << std::endl;
+// 	while (max < target)
+// 	{
+// 		// std::cout << YLL << "Adding remaining indexes:" << target << RST << std::endl;
+// 		vct.push_back(target--);
+// 	}
+// 	vct.erase(vct.begin());
+// }
+
+// void	PmergeMe::_createSequenceJB()
+// {
+// 	size_t	size = (_v1.size());
+// 	_seqJcb.push_back(0);
+// 	_seqJcb.push_back(1);
+// 	for (size_t i = 2; i < _v1.size(); i++) {
+// 		size_t val = _seqJcb[i - 1] + 2 * _seqJcb[i - 2];
+// 		if (val > size)
+// 			break;
+// 		_seqJcb.push_back(val);
+// 		// std::cout << GRN << "value pushed sequence: " << val << RST << std::endl;
+// 	}
+// 	// std::cout << GRN << "Jacobsthal sequence complete: " << RST << std::endl;
+// 	addIndex(_seqJcb);
+// 	printlists(_seqJcb);
+// }

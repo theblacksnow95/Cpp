@@ -10,8 +10,8 @@ PmergeMe::PmergeMe()
 PmergeMe::PmergeMe(int ac, char** av)
 {
 	//std::cout << GRN << "Size of sequence ==> " << ac << RST << std::endl;
-	for (int i = 1; i < ac; i++) {
-		if (!checkDigits(av[i])) {
+	for (int i = 0; i < ac; i++) {
+		if (!checkDigits(av[i])   ) {
 			std::cout << RED << "Error: incorrect arguments " << RST << std::endl;
 			return ;
 		}
@@ -21,7 +21,13 @@ PmergeMe::PmergeMe(int ac, char** av)
 		// std::cout << YLL << "num: " << _v1[i] << RST << std::endl;
 	}
 	_check = _v1;
-	// _createSequenceJB();
+	if (!isOrdered(_v1)) {
+		sortvect();
+		sortdeque();
+		timeDuration();
+	}
+	else
+		std::cout << RED << "Error: invalid sequence, must be positive and not sorted" << RST << std::endl;
 }
 
 PmergeMe::PmergeMe(const PmergeMe& other): _v1(other._v1)
@@ -47,15 +53,12 @@ PmergeMe::~PmergeMe()
 bool	checkDigits(char *str)
 {
 	std::string num(str);
-	if (num.find_first_not_of("01234556789 ") != num.npos)
+	if (num.find_first_not_of("01234556789") != num.npos)
 		return (false);
 	if (std::strtod(str, NULL) > __INT_MAX__ || std::strtod(str , NULL) < 0)
 		return (false);
 	return (true);
 }
-
-
-
 
 std::vector<size_t> PmergeMe::_createJCB(size_t n)
 {
@@ -92,16 +95,18 @@ size_t	findBiggest(std::vector<size_t> vct)
 
 void	PmergeMe::sortvect()
 {
-	if (!isOrdered(_v1)){
+	if (!isOrdered(_v1)) {
 		std::cout << "Original sequence: " << _v1 << std::endl << std::endl;
 		std::clock_t start, end;
 		start = std::clock();
 		std::vector<int> sorted = _mergeSort(_v1);
 		end = std::clock();
 		printlists(sorted);
+		std::cout << std::endl;
 		std::sort(_check.begin(), _check.end());
-		printlists(_check);
-	std::cout << GRN << "Time taken by vector: " << 1000.0 * (end - start) / CLOCKS_PER_SEC << "ms" << RST << std::endl;
+		if (!isOrdered(sorted))
+			std::cout << RED << "Error sorting the sequence" << RST << std::endl;
+		_timeVect = 1000.0 * (end - start) /  CLOCKS_PER_SEC;
 	}
 }
 
@@ -114,77 +119,25 @@ void	PmergeMe::sortdeque()
 		std::deque<int> sorted = _mergeSort(d);
 		end = std::clock();
 		printlists(sorted);
-		std::sort(_check.begin(), _check.end());
-		printlists(_check); 
-		std::cout << GRN << "Time taken by deque: " << 1000.0 * (end - start) / CLOCKS_PER_SEC << "ms" << RST << std::endl;
+		if (!isOrdered(sorted))
+			std::cout << RED << "Error sorting the sequence" << RST << std::endl;
+		_timeDeque = 1000.0 * (end - start) /  CLOCKS_PER_SEC;
 	}
 }
 
+void	PmergeMe::timeDuration()
+{
+	std::cout << GRN << "Time taken by vector of size " << _v1.size() << " ==>\t" << _timeVect << "ms" << RST << std::endl;
+	std::cout << GRN << "Time taken by deque of size  " << _v1.size() << " ==>\t" << _timeDeque << "ms" << RST << std::endl;
 
-// void	PmergeMe::addIndex(std::vector<size_t>& vct)
-// {
-// 	if ( vct.size() <= 2)
-// 		return ;
-// 	size_t count = 0;
-// 	for (size_t i = 1; i < vct.size() ; ++i)
-// 	{
-// 		size_t prev = vct[i - 1 - count];
-// 		size_t curr = vct[i];
-// 		size_t diff = curr - prev;
-// 		count = 0;
-// 		if (prev > curr)
-// 			diff = 0;
-// 		// std::cout << YLL << "Values prev, curr: " << prev << ", " << curr << " diff ==> "<< diff << RST << std::endl;
-// 		if (diff > 1) {
-// 			size_t inter = curr - 1;
-// 			// std::cout << GRN << "\tNumber = " << inter << RST << std::endl;
-// 			while (inter > prev)
-// 			{
-// 				vct.insert(vct.begin() + i + 1, inter);
-// 				// std::cout << BLE << "\tval inserted " << inter << RST << std::endl;
-// 				inter--;
-// 				i++;
-// 				count++;
-// 			}
-// 			// std::cout << RED << "\tcount: " << count << RST << std::endl;
-// 		}
-// 	}
-// 	size_t max = findBiggest(vct);
-// 	size_t target = _v1.size();
-// 	// std::cout << YLL << "Max:" << max << RST << std::endl;
-// 	while (max < target)
-// 	{
-// 		// std::cout << YLL << "Adding remaining indexes:" << target << RST << std::endl;
-// 		vct.push_back(target--);
-// 	}
-// 	vct.erase(vct.begin());
-// }
-
-// void	PmergeMe::_createSequenceJB()
-// {
-// 	size_t	size = (_v1.size());
-// 	_seqJcb.push_back(0);
-// 	_seqJcb.push_back(1);
-// 	for (size_t i = 2; i < _v1.size(); i++) {
-// 		size_t val = _seqJcb[i - 1] + 2 * _seqJcb[i - 2];
-// 		if (val > size)
-// 			break;
-// 		_seqJcb.push_back(val);
-// 		// std::cout << GRN << "value pushed sequence: " << val << RST << std::endl;
-// 	}
-// 	// std::cout << GRN << "Jacobsthal sequence complete: " << RST << std::endl;
-// 	addIndex(_seqJcb);
-// 	printlists(_seqJcb);
-// }
-
-
+}
 
 
 std::ostream&	operator<<(std::ostream& o, const std::vector<int>& obj)
 {
 	for (std::vector<int>::const_iterator it = obj.begin(); it != obj.end(); ++it)
 	{
-		o << YLL << *it;
+		o  << *it;
 		if (it + 1 != obj.end())
 			o << " ";
 	}
@@ -196,7 +149,7 @@ std::ostream&	operator<<(std::ostream& o, const std::deque<int>& obj)
 {
 		for (std::deque<int>::const_iterator it = obj.begin(); it != obj.end(); ++it)
 	{
-		o << YLL << *it;
+		o << *it;
 		if (it + 1 != obj.end())
 			o << " ";
 	}
