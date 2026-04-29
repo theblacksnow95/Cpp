@@ -56,10 +56,10 @@ run: all
 valg: re
 	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET)
 
-test:
+test: all
 	shuf -i 0-10000 -n 3000 | xargs ./PmergeMe 
 
-sectest:
+sectest: all
 	./PmergeMe `shuf -i 1-100000 -n 100 | tr "\n" " "`
 
 .PHONY: all clean fclean re valg run test sectest

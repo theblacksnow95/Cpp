@@ -101,8 +101,8 @@ void	PmergeMe::sortvect()
 		start = std::clock();
 		std::vector<int> sorted = _mergeSort(_v1);
 		end = std::clock();
-		printlists(sorted);
-		std::cout << std::endl;
+		std::cout << GRN << "Vector result: " << RST << std::endl;
+		std::cout << YLL << sorted << RST << std::endl;
 		std::sort(_check.begin(), _check.end());
 		if (!isOrdered(sorted))
 			std::cout << RED << "Error sorting the sequence" << RST << std::endl;
@@ -117,8 +117,9 @@ void	PmergeMe::sortdeque()
 		std::deque<int> d(_v1.begin(), _v1.end());
 		start = std::clock();
 		std::deque<int> sorted = _mergeSort(d);
+		std::cout << GRN << "Deque result: " << RST << std::endl;
+		std::cout << YLL << sorted << RST << std::endl;
 		end = std::clock();
-		printlists(sorted);
 		if (!isOrdered(sorted))
 			std::cout << RED << "Error sorting the sequence" << RST << std::endl;
 		_timeDeque = 1000.0 * (end - start) /  CLOCKS_PER_SEC;

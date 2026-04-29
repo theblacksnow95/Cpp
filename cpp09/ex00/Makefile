@@ -50,11 +50,11 @@ fclean:	clean
 re: clean all
 
 run: all
-	./$(TARGET)
+	./$(TARGET) input.csv
 	@make fclean
 
 valg: re
-	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET) input.csv
 
 .PHONY: all clean fclean re valg run
 
