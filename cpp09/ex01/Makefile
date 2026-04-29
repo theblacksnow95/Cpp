@@ -1,6 +1,6 @@
 #################	TARGET & FLAGS	##################################
 
-TARGET = PmergeMe
+TARGET = RPN
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -g
@@ -11,7 +11,7 @@ OBJDIR = obj
 INCLUDE = include
 #################	SOURCES			##################################
 
-SRC = $(SRCDIR)/main.cpp $(SRCDIR)/PmergeMe.cpp
+SRC = $(SRCDIR)/main.cpp $(SRCDIR)/RPN.cpp
 
 #################	OBJECTS			##################################
 
@@ -56,9 +56,6 @@ run: all
 valg: re
 	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET)
 
-test:
-	shuf -i 0-10000 -n 100 | xargs ./PmergeMe 
-
-.PHONY: all clean fclean re valg run test
+.PHONY: all clean fclean re valg run
 
 .SILENT:

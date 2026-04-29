@@ -10,6 +10,7 @@
 # include <cstdlib>
 # include <climits>
 # include <algorithm>
+# include <ctime>
 
 class PmergeMe
 {
@@ -21,11 +22,12 @@ class PmergeMe
 		template <typename T>
 		void									_insertPend(T& main, T& pend, std::vector<size_t> order, T copy_a);
 		std::vector<int>						_v1;
+		std::vector<int>						_check;
 		std::vector<size_t >					_seqJcb;
-		void									_fillVector(int *arr);
 		std::vector<size_t>						_createJCB(size_t n);
-		void									_createSequenceJB();
-		void									addIndex(std::vector<size_t>& vct);
+		// void									_fillVector(int *arr);
+		// void									_createSequenceJB();
+		// void									addIndex(std::vector<size_t>& vct);
 		public:
 		PmergeMe();
 		PmergeMe(int ac, char** av);
@@ -35,5 +37,9 @@ class PmergeMe
 		void	sortvect();
 		void	sortdeque();
 };
+
+
+std::ostream&	operator<<(std::ostream& o, const std::vector<int>& obj);
+std::ostream&	operator<<(std::ostream& o, const std::deque<int>& obj);
 
 #endif
